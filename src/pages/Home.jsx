@@ -67,12 +67,21 @@ const Home = () => {
             >
               Learn More
             </Link>
-            <Link 
-              to="/about/services" 
+            <button 
+              onClick={() => {
+                // Scroll to service times section on the current page if it exists
+                const serviceTimesElement = document.getElementById('service-times');
+                if (serviceTimesElement) {
+                  serviceTimesElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                  // Navigate to about page with services section
+                  window.location.href = '/about/services';
+                }
+              }}
               className="px-8 py-3 bg-white hover:bg-gray-100 text-gray-900 text-lg font-medium rounded-lg transition-colors"
             >
-              Service Times
-            </Link>
+              View Service Times
+            </button>
           </div>
         </div>
       </section>
@@ -127,10 +136,10 @@ const Home = () => {
       </section>
 
       {/* Upcoming Events */}
-      <section className="py-16 bg-white">
+      <section id="service-times" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Upcoming Events</h2>
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Service Times & Events</h2>
             <p className="text-xl text-gray-700 mt-2">Join us for these upcoming gatherings</p>
           </div>
           

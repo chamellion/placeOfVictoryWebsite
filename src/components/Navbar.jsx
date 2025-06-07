@@ -16,8 +16,22 @@ const Navbar = () => {
       }
     };
 
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.dropdown-container') && !event.target.closest('.mobile-menu')) {
+        setActiveDropdown(null);
+      }
+      if (!event.target.closest('.mobile-menu-container')) {
+        setIsOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
+    };
   }, []);
 
   const toggleDropdown = (index) => {
@@ -57,7 +71,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
-              <div key={index} className="relative group">
+              <div key={index} className="relative group dropdown-container">
                 {item.dropdown ? (
                   <>
                     <button 
@@ -97,7 +111,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700 focus:outline-none"
+            className="md:hidden text-gray-700 focus:outline-none mobile-menu-container"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -105,9 +119,9 @@ const Navbar = () => {
         
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden pt-4 pb-3 space-y-1">
+          <div className="md:hidden pt-4 pb-3 space-y-1 mobile-menu-container">
             {navItems.map((item, index) => (
-              <div key={index} className="py-2">
+              <div key={index} className="py-2 mobile-menu">
                 {item.dropdown ? (
                   <div>
                     <button

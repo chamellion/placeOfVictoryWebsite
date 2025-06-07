@@ -29,6 +29,38 @@ function App() {
           } 
         />
         <Route 
+          path="/about/history" 
+          element={
+            <MainLayout>
+              <About section="history" />
+            </MainLayout>
+          } 
+        />
+        <Route 
+          path="/about/leadership" 
+          element={
+            <MainLayout>
+              <About section="leadership" />
+            </MainLayout>
+          } 
+        />
+        <Route 
+          path="/about/beliefs" 
+          element={
+            <MainLayout>
+              <About section="beliefs" />
+            </MainLayout>
+          } 
+        />
+        <Route 
+          path="/about/services" 
+          element={
+            <MainLayout>
+              <About section="services" />
+            </MainLayout>
+          } 
+        />
+        <Route 
           path="/sermons" 
           element={
             <MainLayout>

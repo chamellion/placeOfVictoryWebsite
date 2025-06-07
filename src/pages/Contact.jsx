@@ -97,7 +97,8 @@ const Contact = () => {
                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Address</h3>
                     <p className="text-lg text-gray-700">
                       47B Westbury Street<br />
-                      Swansea
+                      Swansea, SA1 4JW<br />
+                      United Kingdom
                     </p>
                   </div>
                 </div>
@@ -267,14 +268,14 @@ const Contact = () => {
           <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6 text-center">Our Location</h2>
           <div className="h-96 rounded-xl overflow-hidden shadow-md">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215280026992!2d-73.98750708445387!3d40.75838007932703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1653484597704!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.3857394282765!2d-3.9498946999999997!3d51.6202823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486e03c8b0f8e5eb%3A0xf2bfa9c5a1b8c4d3!2s47B%20Westbury%20St%2C%20Swansea%20SA1%204JW%2C%20UK!5e0!3m2!1sen!2sus!4v1703000000000!5m2!1sen!2sus"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Church Location"
+              title="Church Location - 47B Westbury Street, Swansea"
             ></iframe>
           </div>
         </div>

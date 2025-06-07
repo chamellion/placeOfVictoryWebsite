@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const About = () => {
+const About = ({ section }) => {
   // Sample church history data
   const churchHistory = [
     {
@@ -115,6 +115,16 @@ const About = () => {
     }
   ];
 
+  // Scroll to section if specified
+  useEffect(() => {
+    if (section) {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [section]);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -128,7 +138,7 @@ const About = () => {
       </section>
 
       {/* Our History */}
-      <section className="py-16 bg-white">
+      <section id="history" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our History</h2>
@@ -162,7 +172,7 @@ const About = () => {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-16 bg-gray-50">
+      <section id="leadership" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our Leadership Team</h2>
@@ -191,7 +201,7 @@ const About = () => {
       </section>
 
       {/* Core Beliefs */}
-      <section className="py-16 bg-white">
+      <section id="beliefs" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">What We Believe</h2>
@@ -210,7 +220,7 @@ const About = () => {
       </section>
 
       {/* Service Times & Location */}
-      <section className="py-16 bg-gray-50">
+      <section id="services" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Service Times & Location</h2>
@@ -242,19 +252,19 @@ const About = () => {
               <div className="bg-white rounded-xl shadow-md overflow-hidden">
                 <div className="h-96 w-full">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215280026992!2d-73.98750708445387!3d40.75838007932703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1653484597704!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.3857394282765!2d-3.9498946999999997!3d51.6202823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486e03c8b0f8e5eb%3A0xf2bfa9c5a1b8c4d3!2s47B%20Westbury%20St%2C%20Swansea%20SA1%204JW%2C%20UK!5e0!3m2!1sen!2sus!4v1703000000000!5m2!1sen!2sus"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Church Location"
+                    title="Church Location - 47B Westbury Street, Swansea"
                   ></iframe>
                 </div>
                 <div className="p-6">
                   <h4 className="text-xl font-semibold text-gray-900 mb-2">RCCG Place of Victory</h4>
-                  <p className="text-lg text-gray-700 mb-0">47B Westbury Street<br />Swansea</p>
+                  <p className="text-lg text-gray-700 mb-0">47B Westbury Street<br />Swansea, SA1 4JW<br />United Kingdom</p>
                 </div>
               </div>
             </div>
