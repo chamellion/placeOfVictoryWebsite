@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, MapPin } from 'lucide-react';
+import HeroCarousel from '../components/HeroCarousel';
+import CommunityServices from '../components/CommunityServices';
 
 const Home = () => {
   // Sample upcoming events data
@@ -30,61 +32,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section with Video Background */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            aria-hidden="true"
-          >
-            <source src="/media/hero-video.mp4" type="video/mp4" />
-            {/* Fallback image in case video doesn't load */}
-            <img 
-              src="https://images.unsplash.com/photo-1438032005730-c779502df39b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
-              alt="Church worship" 
-              className="w-full h-full object-cover"
-            />
-          </video>
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        </div>
-        
-        {/* Hero Content */}
-        <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">Welcome to RCCG Place of Victory</h1>
-          <p className="text-xl md:text-2xl lg:text-3xl max-w-3xl mx-auto mb-8">
-            Join us in worship, community, and service as we grow together in faith.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link 
-              to="/about" 
-              className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white text-lg font-medium rounded-lg transition-colors"
-            >
-              Learn More
-            </Link>
-            <button 
-              onClick={() => {
-                // Scroll to service times section on the current page if it exists
-                const serviceTimesElement = document.getElementById('service-times');
-                if (serviceTimesElement) {
-                  serviceTimesElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                  // Navigate to about page with services section
-                  window.location.href = '/about/services';
-                }
-              }}
-              className="px-8 py-3 bg-white hover:bg-gray-100 text-gray-900 text-lg font-medium rounded-lg transition-colors"
-            >
-              View Service Times
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section with Carousel */}
+      <HeroCarousel />
 
       {/* Welcome Section */}
       <section className="py-16 bg-white">
@@ -107,6 +56,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Community Services Section */}
+      <CommunityServices />
 
       {/* Mission & Vision */}
       <section className="py-16 bg-gray-50">

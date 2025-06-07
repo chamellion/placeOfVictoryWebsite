@@ -52,7 +52,15 @@ const Navbar = () => {
     },
     { title: 'Sermons', path: '/sermons' },
     { title: 'Events', path: '/events' },
+    { title: 'Community Services', path: '/community-services' },
+    { title: 'Prayer', path: '/prayer' },
+    { title: 'Testimonies', path: '/testimonies' },
     { title: 'Contact', path: '/contact' },
+    { 
+      title: 'Donate', 
+      path: '/donate',
+      highlight: true
+    },
   ];
 
   return (
@@ -60,12 +68,22 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-3">
-            <img 
-              src="/rccg_logo.png" 
-              alt="RCCG Place of Victory Logo" 
-              className="h-16 md:h-18 w-auto"
-            />
-            <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600">RCCG Place of Victory</span>
+            <div className="flex items-center space-x-2">
+              <img 
+                src="/rccg_logo.png" 
+                alt="RCCG Logo" 
+                className="h-12 md:h-14 w-auto"
+              />
+              <div className="h-12 md:h-14 w-px bg-gray-300"></div>
+              <img 
+                src="/church_logo.png" 
+                alt="Place of Victory Logo" 
+                className="h-12 md:h-14 w-auto"
+              />
+            </div>
+            <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary-600 hidden md:block">
+              RCCG Place of Victory
+            </span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -74,32 +92,41 @@ const Navbar = () => {
               <div key={index} className="relative group dropdown-container">
                 {item.dropdown ? (
                   <>
-                    <button 
+                    <button
                       onClick={() => toggleDropdown(index)}
-                      className="flex items-center text-gray-700 hover:text-primary-600 transition-colors py-2 text-lg"
+                      className={`flex items-center text-gray-700 hover:text-primary-600 font-medium ${
+                        activeDropdown === index ? 'text-primary-600' : ''
+                      }`}
                     >
                       {item.title}
-                      <ChevronDown className="ml-1 h-4 w-4" />
+                      <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${
+                        activeDropdown === index ? 'transform rotate-180' : ''
+                      }`} />
                     </button>
-                    {activeDropdown === index && (
-                      <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-40">
-                        {item.dropdown.map((dropItem, dropIndex) => (
-                          <Link
-                            key={dropIndex}
-                            to={dropItem.path}
-                            className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-lg"
-                            onClick={() => setActiveDropdown(null)}
-                          >
-                            {dropItem.title}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                    <div 
+                      className={`absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 transition-all duration-200 ${
+                        activeDropdown === index ? 'opacity-100 visible' : 'opacity-0 invisible'
+                      }`}
+                    >
+                      {item.dropdown.map((dropdownItem, dropdownIndex) => (
+                        <Link
+                          key={dropdownIndex}
+                          to={dropdownItem.path}
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary-600"
+                        >
+                          {dropdownItem.title}
+                        </Link>
+                      ))}
+                    </div>
                   </>
                 ) : (
-                  <Link
-                    to={item.path}
-                    className="text-gray-700 hover:text-primary-600 transition-colors text-lg"
+                  <Link 
+                    to={item.path} 
+                    className={`font-medium ${
+                      item.highlight 
+                        ? 'px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors' 
+                        : 'text-gray-700 hover:text-primary-600'
+                    }`}
                   >
                     {item.title}
                   </Link>
@@ -119,47 +146,73 @@ const Navbar = () => {
         
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden pt-4 pb-3 space-y-1 mobile-menu-container">
-            {navItems.map((item, index) => (
-              <div key={index} className="py-2 mobile-menu">
-                {item.dropdown ? (
-                  <div>
-                    <button
-                      onClick={() => toggleDropdown(index)}
-                      className="w-full flex items-center justify-between text-left px-2 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-md text-lg"
-                    >
-                      {item.title}
-                      <ChevronDown className="h-5 w-5" />
-                    </button>
-                    {activeDropdown === index && (
-                      <div className="pl-4 mt-1 border-l-2 border-primary-100">
-                        {item.dropdown.map((dropItem, dropIndex) => (
-                          <Link
-                            key={dropIndex}
-                            to={dropItem.path}
-                            className="block px-2 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-md text-lg"
-                            onClick={() => {
-                              setActiveDropdown(null);
-                              setIsOpen(false);
-                            }}
-                          >
-                            {dropItem.title}
-                          </Link>
-                        ))}
-                      </div>
+          <div 
+            className={`fixed inset-0 bg-gray-900 bg-opacity-50 z-40 transition-opacity duration-300 ${
+              isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <div 
+              className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+                isOpen ? 'translate-x-0' : 'translate-x-full'
+              } mobile-menu-container`}
+            >
+              <div className="p-4 border-b">
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              <nav className="p-4 mobile-menu">
+                {navItems.map((item, index) => (
+                  <div key={index} className="mb-4">
+                    {item.dropdown ? (
+                      <>
+                        <button
+                          onClick={() => toggleDropdown(index)}
+                          className="flex items-center justify-between w-full text-gray-700 hover:text-primary-600 font-medium"
+                        >
+                          {item.title}
+                          <ChevronDown className={`h-4 w-4 transition-transform ${
+                            activeDropdown === index ? 'transform rotate-180' : ''
+                          }`} />
+                        </button>
+                        <div 
+                          className={`mt-2 space-y-2 pl-4 ${
+                            activeDropdown === index ? 'block' : 'hidden'
+                          }`}
+                        >
+                          {item.dropdown.map((dropdownItem, dropdownIndex) => (
+                            <Link
+                              key={dropdownIndex}
+                              to={dropdownItem.path}
+                              className="block py-2 text-gray-700 hover:text-primary-600"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              {dropdownItem.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link 
+                        to={item.path} 
+                        className={`block py-2 ${
+                          item.highlight 
+                            ? 'px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-center' 
+                            : 'text-gray-700 hover:text-primary-600'
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.title}
+                      </Link>
                     )}
                   </div>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className="block px-2 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-md text-lg"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.title}
-                  </Link>
-                )}
-              </div>
-            ))}
+                ))}
+              </nav>
+            </div>
           </div>
         )}
       </div>
