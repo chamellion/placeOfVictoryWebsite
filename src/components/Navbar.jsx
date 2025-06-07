@@ -155,28 +155,36 @@ const Navbar = () => {
             ))}
           </nav>
           
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
-            aria-expanded={isOpen}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile menu button - Moved outside of any container that might interfere with clicks */}
+          <div className="md:hidden relative z-50">
+            <button
+              onClick={() => {
+                console.log('Menu button clicked'); // Debug log
+                setIsOpen(!isOpen);
+              }}
+              className="text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
+              aria-expanded={isOpen}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              type="button"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
         
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Adjusted z-index and positioning */}
         <div 
           ref={mobileMenuRef}
           className={`fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden
             ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          style={{ display: isOpen ? 'block' : 'none' }} // Force display property
           onClick={() => setIsOpen(false)}
         >
           <div 
             className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out
               ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             onClick={e => e.stopPropagation()}
+            style={{ display: isOpen ? 'block' : 'none' }} // Force display property
           >
             <div className="flex justify-between items-center p-4 border-b">
               <span className="text-xl font-bold text-primary-600">Menu</span>
