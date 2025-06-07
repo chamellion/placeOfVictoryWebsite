@@ -76,7 +76,7 @@ const Navbar = () => {
               />
               <div className="h-12 md:h-14 w-px bg-gray-300"></div>
               <img 
-                src="/church_logo.png" 
+                src="/church_logo.jpg" 
                 alt="Place of Victory Logo" 
                 className="h-12 md:h-14 w-auto"
               />
