@@ -6,6 +6,10 @@ import About from './pages/About';
 import Sermons from './pages/Sermons';
 import Events from './pages/Events';
 import Contact from './pages/Contact';
+import Donate from './pages/Donate';
+import Prayer from './pages/Prayer';
+import CommunityServices from './pages/CommunityServices';
+import Testimonies from './pages/Testimonies';
 import './App.css';
 
 function App() {
@@ -84,6 +88,17 @@ function App() {
             </MainLayout>
           } 
         />
+        <Route 
+          path="/donate" 
+          element={
+            <MainLayout>
+              <Donate />
+            </MainLayout>
+          } 
+        />
+        <Route path="/prayer" element={<MainLayout><Prayer /></MainLayout>} />
+        <Route path="/community-services" element={<MainLayout><CommunityServices /></MainLayout>} />
+        <Route path="/testimonies" element={<MainLayout><Testimonies /></MainLayout>} />
       </Routes>
     </Router>
   );

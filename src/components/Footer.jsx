@@ -32,7 +32,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <img 
-                src="/church_logo.png" 
+                src="/church_logo.jpg" 
                 alt="RCCG Place of Victory Logo" 
                 className="h-16 w-auto"
               />
