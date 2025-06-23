@@ -111,6 +111,7 @@ const Navbar = () => {
         isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/90 py-4'
       }`}
       role="banner"
+      aria-label="Site header"
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
@@ -177,7 +178,7 @@ const Navbar = () => {
                           willChange: 'transform, opacity',
                         }}
                         role="menu"
-                        aria-label={`${item.title} submenu`}
+                        aria-label={`${item.title} desktop submenu`}
                       >
                         {item.dropdown.map((dropdownItem, dropdownIndex) => (
                           <li key={dropdownIndex} role="none">
@@ -224,7 +225,7 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden relative z-50 p-2 text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
             aria-expanded={isOpen}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-label={isOpen ? 'Close mobile menu' : 'Open mobile menu'}
             aria-controls="mobile-menu"
             type="button"
           >
@@ -241,7 +242,7 @@ const Navbar = () => {
           onClick={() => setIsOpen(false)}
           role="dialog"
           aria-modal="true"
-          aria-label="Mobile menu"
+          aria-label="Mobile navigation menu"
         >
           <div 
             className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out
@@ -253,7 +254,7 @@ const Navbar = () => {
               <button 
                 onClick={() => setIsOpen(false)}
                 className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
-                aria-label="Close menu"
+                aria-label="Close mobile menu"
                 type="button"
               >
                 <X size={24} aria-hidden="true" />
@@ -294,7 +295,7 @@ const Navbar = () => {
                             willChange: 'transform, opacity, max-height',
                           }}
                           role="menu"
-                          aria-label={`${item.title} submenu`}
+                          aria-label={`${item.title} mobile submenu`}
                         >
                           {item.dropdown.map((dropdownItem, dropdownIndex) => (
                             <li key={dropdownIndex} role="none">
