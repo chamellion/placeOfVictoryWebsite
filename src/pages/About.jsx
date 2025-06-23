@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Target, Heart, Zap, Sprout } from 'lucide-react';
+import FlipCard from '../components/FlipCard';
 
 const About = ({ section }) => {
   // Sample church history data
@@ -33,12 +34,48 @@ const About = ({ section }) => {
 
   // Updated leadership team data
   const leadershipTeam = [
-    { id: 1, name: 'Jeffrey Nsofor', role: 'Lead Pastor', imageUrl: '/images/leaders/jeffrey_nsofor.jpg', bio: '' },
-    { id: 2, name: 'Mmesoma Nsofor', role: 'Asst. Pastor', imageUrl: '/images/leaders/mmesoma_nsofor.jpg', bio: '' },
-    { id: 3, name: 'Dr Adesola Ademiloye', role: 'Asst. Pastor', imageUrl: '/images/leaders/sola_ademiloye.jpg', bio: '' },
-    { id: 4, name: 'Dr Austin Egwebe', role: 'Asst. Pastor', imageUrl: '/images/leaders/austin_egwebe.jpg', bio: '' },
-    { id: 5, name: 'Temitope Olabode', role: 'HOD, Creative Arts', imageUrl: '/images/leaders/temitope_olabode.jpg', bio: '' },
-    { id: 6, name: 'Mrs Taiwo Ademiloye', role: 'HOD Admin & Finance', imageUrl: '/images/leaders/taiwo_ademiloye.jpg', bio: '' }
+    { 
+      id: 1, 
+      name: 'Jeffrey Nsofor', 
+      role: 'Lead Pastor', 
+      imageUrl: '/images/leaders/jeffrey_nsofor.jpg', 
+      bio: 'Jeffrey oversees our spiritual direction and leads with wisdom and humility. With over 15 years of pastoral experience, he is passionate about discipleship and community transformation. His leadership focuses on building strong families and equipping believers for ministry.' 
+    },
+    { 
+      id: 2, 
+      name: 'Mmesoma Nsofor', 
+      role: 'Asst. Pastor', 
+      imageUrl: '/images/leaders/mmesoma_nsofor.jpg', 
+      bio: 'Mmesoma serves alongside her husband in ministry, focusing on women\'s ministry and family counseling. She brings warmth and compassion to all she does, helping women grow in their faith and build strong family relationships.' 
+    },
+    { 
+      id: 3, 
+      name: 'Dr Adesola Ademiloye', 
+      role: 'Asst. Pastor', 
+      imageUrl: '/images/leaders/sola_ademiloye.jpg', 
+      bio: 'Dr. Ademiloye brings academic excellence and spiritual depth to our ministry. He specializes in biblical teaching and youth discipleship programs, helping young people develop a strong foundation in their faith.' 
+    },
+    { 
+      id: 4, 
+      name: 'Dr Austin Egwebe', 
+      role: 'Asst. Pastor', 
+      imageUrl: '/images/leaders/austin_egwebe.jpg', 
+      bio: 'Dr. Egwebe contributes his expertise in pastoral care and community outreach. He is dedicated to serving the congregation and reaching out to the local community with the love of Christ.' 
+    },
+    { 
+      id: 5, 
+      name: 'Temitope Olabode', 
+      role: 'HOD, Creative Arts', 
+      imageUrl: '/images/leaders/temitope_olabode.jpg', 
+      bio: 'Temitope leads our creative arts ministry, overseeing worship, music, and visual arts. She helps create meaningful worship experiences that draw people closer to God through creative expression.' 
+    },
+    { 
+      id: 6, 
+      name: 'Mrs Taiwo Ademiloye', 
+      role: 'HOD Admin & Finance', 
+      imageUrl: '/images/leaders/taiwo_ademiloye.jpg', 
+      bio: 'Mrs. Ademiloye manages our administrative and financial operations with excellence and integrity. She ensures the church runs smoothly so we can focus on ministry and outreach.' 
+    }
   ];
 
   // Our Values data with Lucide icons
@@ -239,28 +276,15 @@ const About = ({ section }) => {
             <p className="text-xl text-gray-700 mt-2">Meet the people who help guide and serve our church</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {leadershipTeam.map((leader) => (
-              <div key={leader.id} className="bg-gray-50 rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in">
-                <div className="h-96 overflow-hidden bg-gray-200 flex items-center justify-center">
-                  <img 
-                    src={leader.imageUrl} 
-                    alt={leader.name} 
-                    className="w-full h-full object-cover object-center"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                  <div className="hidden items-center justify-center w-full h-full text-gray-500 text-4xl">
-                    👤
-                  </div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-1">{leader.name}</h3>
-                  <p className="text-primary-600 font-medium text-lg">{leader.role}</p>
-                  {leader.bio && <p className="text-lg text-gray-700 mt-4">{leader.bio}</p>}
-                </div>
+              <div key={leader.id} className="h-96 animate-fade-in">
+                <FlipCard
+                  name={leader.name}
+                  role={leader.role}
+                  bio={leader.bio}
+                  imageUrl={leader.imageUrl}
+                />
               </div>
             ))}
           </div>
