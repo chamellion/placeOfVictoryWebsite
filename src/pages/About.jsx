@@ -30,35 +30,39 @@ const About = ({ section }) => {
     }
   ];
 
-  // Sample leadership data
+  // Updated leadership team data
   const leadershipTeam = [
+    { id: 1, name: 'Jeffrey Nsofor', role: 'Lead Pastor', imageUrl: '/images/leaders/jeffrey_nsofor.jpg', bio: '' },
+    { id: 2, name: 'Mmesoma Nsofor', role: 'Asst. Pastor', imageUrl: '/images/leaders/mmesoma_nsofor.jpg', bio: '' },
+    { id: 3, name: 'Austin Egwebe', role: 'Asst. Pastor', imageUrl: '/images/leaders/austin_egwebe.jpg', bio: '' },
+    { id: 4, name: 'Temitope Olabode', role: 'HOD, Creative Arts', imageUrl: '/images/leaders/temitope_olabode.jpg', bio: '' }
+  ];
+
+  // Our Values data
+  const ourValues = [
     {
       id: 1,
-      name: 'Pastor John Smith',
-      role: 'Senior Pastor',
-      bio: 'Pastor John has been serving at RCCG Place of Victory for over 15 years. He has a passion for teaching God\'s Word and discipling others to grow in their faith.',
-      imageUrl: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+      title: 'Purpose',
+      description: 'Why are we in Swansea? To reveal Jesus through our lifestyle and service to the community.',
+      icon: '🎯'
     },
     {
       id: 2,
-      name: 'Sarah Johnson',
-      role: 'Worship Pastor',
-      bio: 'Sarah leads our worship ministry with creativity and a heart for authentic worship. She has been on staff for 8 years and is passionate about helping others connect with God through music.',
-      imageUrl: 'https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+      title: 'Passion',
+      description: 'We stay focused through prayer, the Word, and constant evaluation.',
+      icon: '🔥'
     },
     {
       id: 3,
-      name: 'Michael Thompson',
-      role: 'Youth Pastor',
-      bio: 'Michael oversees our vibrant youth ministry, creating engaging programs that help teens grow in their faith and develop Christian character.',
-      imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+      title: 'Power',
+      description: 'We rely on the Holy Spirit\'s empowerment, study, and training.',
+      icon: '⚡'
     },
     {
       id: 4,
-      name: 'Rebecca Martinez',
-      role: 'Children\'s Ministry Director',
-      bio: 'Rebecca has a heart for children and over 10 years of experience in education. She creates fun, Bible-based programs that help children learn about God\'s love.',
-      imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+      title: 'Produce',
+      description: 'We sustain vision through discipleship and leadership development.',
+      icon: '🌱'
     }
   ];
 
@@ -131,8 +135,8 @@ const About = ({ section }) => {
       <section className="bg-primary-700 text-white py-24">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">About Our Church</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Learn about our history, our team, what we believe, and how you can join us in our journey of faith.
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8">
+          RCCG Place of Victory (POV) Church Swansea is a vibrant, Pentecostal church for all nations, where individuals are transformed into believers who are eager to reveal Jesus through exemplary Christian lifestyle, charity, and personal transformation.
           </p>
         </div>
       </section>
@@ -171,8 +175,52 @@ const About = ({ section }) => {
         </div>
       </section>
 
+      {/* Vision Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6">Vision</h2>
+            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+              To raise a generation of believers who are eager to reveal Jesus to the dying world through exemplary Christian lifestyle, charity and personal transformation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6">Mission</h2>
+            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+              This vision is achieved through discipleship, transformational prayers, intimate worship, and community engagement for the propagation of the gospel.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Values Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our Values</h2>
+            <p className="text-xl text-gray-700 mt-2">The principles that guide our ministry and community</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {ourValues.map((value) => (
+              <div key={value.id} className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                <div className="text-4xl mb-4">{value.icon}</div>
+                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">{value.title}</h3>
+                <p className="text-lg text-gray-700 leading-relaxed">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Leadership Team */}
-      <section id="leadership" className="py-16 bg-gray-50">
+      <section id="leadership" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our Leadership Team</h2>
@@ -181,18 +229,25 @@ const About = ({ section }) => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {leadershipTeam.map((leader) => (
-              <div key={leader.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-                <div className="h-48 overflow-hidden">
+              <div key={leader.id} className="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="h-96 overflow-hidden bg-gray-200 flex items-center justify-center">
                   <img 
                     src={leader.imageUrl} 
                     alt={leader.name} 
                     className="w-full h-full object-cover object-center"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
                   />
+                  <div className="hidden items-center justify-center w-full h-full text-gray-500 text-4xl">
+                    👤
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-1">{leader.name}</h3>
-                  <p className="text-primary-600 font-medium mb-4 text-lg">{leader.role}</p>
-                  <p className="text-lg text-gray-700">{leader.bio}</p>
+                  <p className="text-primary-600 font-medium text-lg">{leader.role}</p>
+                  {leader.bio && <p className="text-lg text-gray-700 mt-4">{leader.bio}</p>}
                 </div>
               </div>
             ))}
@@ -201,7 +256,7 @@ const About = ({ section }) => {
       </section>
 
       {/* Core Beliefs */}
-      <section id="beliefs" className="py-16 bg-white">
+      <section id="beliefs" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">What We Believe</h2>
@@ -210,7 +265,7 @@ const About = ({ section }) => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {coreBeliefs.map((belief) => (
-              <div key={belief.id} className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
+              <div key={belief.id} className="bg-white rounded-xl p-6 hover:shadow-md transition-shadow">
                 <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3">{belief.title}</h3>
                 <p className="text-lg text-gray-700">{belief.description}</p>
               </div>
@@ -220,7 +275,7 @@ const About = ({ section }) => {
       </section>
 
       {/* Service Times & Location */}
-      <section id="services" className="py-16 bg-gray-50">
+      <section id="services" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Service Times & Location</h2>
@@ -232,7 +287,7 @@ const About = ({ section }) => {
               <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">Service Times</h3>
               <div className="space-y-6">
                 {serviceTimes.map((item, index) => (
-                  <div key={index} className="bg-white rounded-xl shadow-md p-6">
+                  <div key={index} className="bg-gray-50 rounded-xl shadow-md p-6">
                     <h4 className="text-xl md:text-2xl font-semibold text-primary-600 mb-3">{item.day}</h4>
                     <ul className="space-y-3">
                       {item.services.map((service, sIndex) => (
@@ -249,7 +304,7 @@ const About = ({ section }) => {
             
             <div>
               <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">Our Location</h3>
-              <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="bg-gray-50 rounded-xl shadow-md overflow-hidden">
                 <div className="h-96 w-full">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.3857394282765!2d-3.9498946999999997!3d51.6202823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486e03c8b0f8e5eb%3A0xf2bfa9c5a1b8c4d3!2s47B%20Westbury%20St%2C%20Swansea%20SA1%204JW%2C%20UK!5e0!3m2!1sen!2sus!4v1703000000000!5m2!1sen!2sus"
