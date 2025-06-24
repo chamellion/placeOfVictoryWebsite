@@ -73,6 +73,17 @@ const Events = () => {
       capacity: 120,
       category: 'Children'
     },
+    {
+      id: 7,
+      title: 'Battlefield of the Mind',
+      date: new Date(2025, 6, 1), // July 01, 2025
+      time: '6:30 PM - 8:00 PM',
+      location: 'Main Sanctuary',
+      description: '🎉Calling all young adults to this edition of the YASF meeting. Date➡️1st July. Time🔄6:30pm. It promises to be nothing short of educative & inspiring',
+      registrationLink: '#',
+      capacity: 400,
+      category: 'Young Adults and Singles Fellowship'
+    },
   ];
   
   // Get upcoming events (events after today)
