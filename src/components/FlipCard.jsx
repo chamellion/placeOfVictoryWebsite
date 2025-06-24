@@ -80,11 +80,18 @@ const FlipCard = ({ name, role, bio, imageUrl }) => {
                 onError={(e) => {
                   console.log('FlipCard image failed to load:', imageUrl);
                   e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
                 }}
                 onLoad={() => {
                   console.log('FlipCard image loaded successfully:', imageUrl);
                 }}
               />
+              <div 
+                className="hidden items-center justify-center w-full h-full text-gray-500 text-4xl bg-gray-100"
+                style={{ display: 'none' }}
+              >
+                👤
+              </div>
             </div>
             <div className="p-6 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-1">{name}</h3>

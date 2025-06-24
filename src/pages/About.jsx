@@ -78,6 +78,94 @@ const About = ({ section }) => {
     }
   ];
 
+  // Team Leads data
+  const teamLeads = [
+    { 
+      id: 1,
+      name: 'Ebenezer Ishola', 
+      role: 'Evangelism Team Lead', 
+      imageUrl: '/images/teams/ebenezer_ishola.jpg', 
+      bio: 'Ebenezer leads our evangelism efforts with passion and dedication. He coordinates outreach programs and equips believers to share the gospel effectively in our community and beyond.' 
+    },
+    { 
+      id: 2,
+      name: 'Francess Iyere', 
+      role: 'Drama Team Lead', 
+      imageUrl: '/images/teams/francess_iyere.jpg', 
+      bio: 'Francess directs our drama ministry, using creative arts to communicate biblical truths and engage audiences. Her team brings stories to life through powerful performances and skits.' 
+    },
+    { 
+      id: 3,
+      name: 'Busayo Fejoku', 
+      role: 'Ushering Team Lead', 
+      imageUrl: '/images/teams/busayo_fejoku.jpg', 
+      bio: 'Busayo ensures smooth operations during services by leading our ushering team. She creates a welcoming atmosphere and helps maintain order during worship services and events.' 
+    },
+    { 
+      id: 4,
+      name: 'Ayorinde Idowu', 
+      role: 'POV Men Team Lead', 
+      imageUrl: '/images/teams/ayorinde_idowu.jpg', 
+      bio: 'Ayorinde leads our men\'s ministry, focusing on spiritual growth, accountability, and fellowship. He organizes events and programs that strengthen men in their faith journey.' 
+    },
+    { 
+      id: 5,
+      name: 'Dunsin Alade', 
+      role: 'Asst. Admin', 
+      imageUrl: '/images/teams/dunsin_alade.jpg', 
+      bio: 'Dunsin supports our administrative functions with efficiency and attention to detail. He helps coordinate church activities and ensures smooth day-to-day operations.' 
+    },
+    { 
+      id: 6,
+      name: 'Lizah Urombo', 
+      role: 'Media Team Lead', 
+      imageUrl: '/images/teams/lizah_urombo.jpg', 
+      bio: 'Lizah oversees our media and communications, managing social media, website content, and digital outreach. She helps us stay connected with our congregation and community.' 
+    },
+    { 
+      id: 7,
+      name: 'Nicole Dele-Alufe', 
+      role: 'Asst. Choir Director', 
+      imageUrl: '/images/teams/nicole_dele-alufe.jpg', 
+      bio: 'Nicole supports our choir ministry with her musical talents and leadership. She helps coordinate rehearsals and performances, ensuring excellence in our worship through music.' 
+    },
+    { 
+      id: 8,
+      name: 'Rachel Igwe', 
+      role: 'Exec. Youth in Christ', 
+      imageUrl: '/images/teams/rachel_igwe.jpg', 
+      bio: 'Rachel leads our youth ministry with energy and creativity. She organizes activities, Bible studies, and events that help young people grow in their faith and build meaningful relationships.' 
+    },
+    { 
+      id: 9,
+      name: 'Taiwo Adeniye', 
+      role: 'Prayer Team Lead', 
+      imageUrl: '/images/teams/taiwo_adeniye.jpg', 
+      bio: 'Taiwo coordinates our prayer ministry, leading intercessory prayer sessions and encouraging the congregation in their prayer life. She helps maintain the spiritual foundation of our church.' 
+    },
+    { 
+      id: 10,
+      name: 'Thaina Jesus', 
+      role: 'Exec. Youth in Christ', 
+      imageUrl: '/images/teams/thaina_jesus.jpg', 
+      bio: 'Thaina works alongside our youth ministry leadership to create engaging programs and activities. She helps young people develop their faith and leadership skills through various initiatives.' 
+    },
+    { 
+      id: 11,
+      name: 'Veronica Olaosebikan', 
+      role: 'Choir Director', 
+      imageUrl: '/images/teams/veronica_olaosebikan.jpg', 
+      bio: 'Veronica leads our choir with excellence and passion for worship. She directs musical performances, coordinates rehearsals, and helps create an atmosphere of praise through music.' 
+    },
+    { 
+      id: 12,
+      name: 'Funke Balogun', 
+      role: 'Exec. Youth in Christ', 
+      imageUrl: '/images/teams/funke_balogun.jpg', 
+      bio: 'Funke contributes to our youth ministry by organizing events and mentoring young people. She helps create a supportive environment where youth can grow spiritually and develop their gifts.' 
+    }
+  ];
+
   // Our Values data with Lucide icons
   const ourValues = [
     {
@@ -284,6 +372,37 @@ const About = ({ section }) => {
                   role={leader.role}
                   bio={leader.bio}
                   imageUrl={leader.imageUrl}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Leads */}
+      <section id="team-leads" className="py-16 bg-gradient-to-br from-purple-50 to-pink-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-pink-100/20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our Team Leads</h2>
+            <p className="text-xl text-gray-700 mt-2">Serving with excellence across our departments</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamLeads.map((teamLead, index) => (
+              <div 
+                key={teamLead.id} 
+                className="h-96 animate-fade-in-up"
+                style={{ 
+                  animationDelay: `${index * 0.1}s`,
+                  animationFillMode: 'both'
+                }}
+              >
+                <FlipCard
+                  name={teamLead.name}
+                  role={teamLead.role}
+                  bio={teamLead.bio}
+                  imageUrl={teamLead.imageUrl}
                 />
               </div>
             ))}
