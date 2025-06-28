@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Church Info */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
@@ -75,6 +75,28 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/contact" className="text-lg text-gray-300 hover:text-white transition-colors">Contact</Link>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Get Involved */}
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold mb-4">Get Involved</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/volunteer" className="text-lg text-gray-300 hover:text-white transition-colors">Become a Volunteer</Link>
+              </li>
+              <li>
+                <Link to="/donate" className="text-lg text-gray-300 hover:text-white transition-colors">Make a Donation</Link>
+              </li>
+              <li>
+                <Link to="/community-services" className="text-lg text-gray-300 hover:text-white transition-colors">Community Services</Link>
+              </li>
+              <li>
+                <Link to="/prayer" className="text-lg text-gray-300 hover:text-white transition-colors">Prayer Requests</Link>
+              </li>
+              <li>
+                <Link to="/testimonies" className="text-lg text-gray-300 hover:text-white transition-colors">Share Your Story</Link>
               </li>
             </ul>
           </div>

@@ -9,70 +9,178 @@ import {
   Calendar, 
   Clock, 
   ArrowRight,
-  ChevronRight
+  ChevronRight,
+  Baby,
+  Brain,
+  HandHeart,
+  Utensils,
+  Shirt,
+  Users2,
+  Star,
+  Quote,
+  Share2
 } from 'lucide-react';
 
 const CommunityServices = () => {
-  const services = [
+  // Gallery of Love in Action - Using real available images
+  const galleryImages = [
     {
       id: 1,
-      title: 'Food Pantry',
-      description: 'Providing essential groceries and meals to families in need, ensuring no one in our community goes hungry.',
-      impact: 'Serving over 200 families monthly with fresh produce and non-perishable items.',
-      image: '/media/services/food-pantry.jpg',
-      icon: <Heart className="h-8 w-8" />,
-      needs: ['Food donations', 'Volunteers for distribution', 'Storage space'],
-      schedule: 'Every Saturday, 9:00 AM - 12:00 PM',
+      src: '/images/community_work/community_work_one.jpg',
+      alt: 'Community Work - Clothing Distribution',
+      caption: 'Clothing Distribution',
+      category: 'Essential Needs'
     },
     {
       id: 2,
-      title: 'Homeless Outreach',
-      description: 'Extending God\'s love to our homeless neighbors through meals, supplies, and support services.',
-      impact: 'Providing weekly meals and essential supplies to over 50 individuals.',
-      image: '/media/services/homeless-outreach.jpg',
-      icon: <Home className="h-8 w-8" />,
-      needs: ['Hygiene kits', 'Warm clothing', 'Volunteers'],
-      schedule: 'Every Thursday, 6:00 PM - 8:00 PM',
+      src: '/images/community_work/community_work_two.jpg',
+      alt: 'Community Work - Shoe Drive',
+      caption: 'Shoe Drive',
+      category: 'Essential Needs'
     },
     {
       id: 3,
-      title: 'Youth Mentoring',
-      description: 'Empowering young people through mentorship, academic support, and life skills development.',
-      impact: 'Mentoring 75+ youth annually with a 90% high school graduation rate.',
-      image: '/media/services/youth-mentoring.jpg',
-      icon: <Users className="h-8 w-8" />,
-      needs: ['Mentors', 'Educational resources', 'Meeting space'],
-      schedule: 'Every Tuesday & Thursday, 4:00 PM - 6:00 PM',
+      src: '/images/community_work/community_work_three.jpg',
+      alt: 'Community Work - Clothing Sharing',
+      caption: 'Clothing Sharing',
+      category: 'Essential Needs'
     },
     {
       id: 4,
-      title: 'Job Readiness',
-      description: 'Helping community members develop skills and find employment through training and networking.',
-      impact: 'Assisted 120+ individuals in finding stable employment last year.',
-      image: '/media/services/job-readiness.jpg',
-      icon: <BookOpen className="h-8 w-8" />,
-      needs: ['Career mentors', 'Computer equipment', 'Workshop space'],
-      schedule: 'Every Monday & Wednesday, 6:00 PM - 8:00 PM',
+      src: '/images/community_work/community_work_four.jpg',
+      alt: 'Community Work - Community Support',
+      caption: 'Community Support',
+      category: 'Essential Needs'
     },
     {
       id: 5,
-      title: 'Prayer Support',
-      description: 'Offering spiritual guidance and prayer support for those facing life\'s challenges.',
-      impact: 'Supporting hundreds of individuals through prayer and spiritual counseling.',
-      image: '/media/services/prayer-support.jpg',
-      icon: <Heart className="h-8 w-8" />,
-      needs: ['Prayer warriors', 'Counseling resources'],
-      schedule: 'Available 24/7 through our prayer line',
+      src: '/images/community_work/community_work_five.jpg',
+      alt: 'Community Work - Clothing Distribution',
+      caption: 'Clothing Distribution',
+      category: 'Essential Needs'
     },
     {
       id: 6,
-      title: 'Crisis Helpline',
-      description: 'Providing immediate support and resources for those in crisis situations.',
-      impact: 'Responding to over 500 crisis calls annually with appropriate support.',
-      image: '/media/services/crisis-helpline.jpg',
-      icon: <Phone className="h-8 w-8" />,
-      needs: ['Trained volunteers', 'Support resources'],
-      schedule: '24/7 helpline available',
+      src: '/images/community_work/community_work_six.jpg',
+      alt: 'Community Work - Shoe Distribution',
+      caption: 'Shoe Distribution',
+      category: 'Essential Needs'
+    },
+    {
+      id: 7,
+      src: '/images/community_work/community_work_seven.jpg',
+      alt: 'Community Work - Community Outreach',
+      caption: 'Community Outreach',
+      category: 'Essential Needs'
+    },
+    {
+      id: 8,
+      src: '/images/community_work/community_work_eight.jpg',
+      alt: 'Community Work - Clothing Drive',
+      caption: 'Clothing Drive',
+      category: 'Essential Needs'
+    },
+    {
+      id: 9,
+      src: '/images/community_work/community_work_nine.jpg',
+      alt: 'Community Work - Shoe Sharing',
+      caption: 'Shoe Sharing',
+      category: 'Essential Needs'
+    },
+    {
+      id: 10,
+      src: '/images/community_work/community_work_ten.jpg',
+      alt: 'Community Work - Community Service',
+      caption: 'Community Service',
+      category: 'Essential Needs'
+    }
+  ];
+
+  // Enhanced services with categories and badges
+  const services = [
+    {
+      id: 1,
+      title: 'Food & Clothing Distribution',
+      description: 'Providing essential groceries, meals, and clothing to families in need, ensuring no one in our community goes hungry or without proper attire.',
+      impact: 'Serving over 200 families monthly with fresh produce, non-perishable items, and seasonal clothing.',
+      image: '/images/community_work/community_work_one.jpg',
+      icon: <Utensils className="h-8 w-8" />,
+      needs: ['Food donations', 'Clothing donations', 'Volunteers for distribution', 'Storage space'],
+      schedule: 'Every Saturday, 9:00 AM - 12:00 PM',
+      category: 'Essential Needs',
+      badge: 'Essential Care',
+      badgeColor: 'bg-blue-100 text-blue-800',
+      emoji: '👕'
+    },
+    {
+      id: 2,
+      title: 'Shoe Drive Initiative',
+      description: 'Collecting and distributing shoes to children and adults in need, helping them walk with dignity and comfort.',
+      impact: 'Distributed over 500 pairs of shoes to families and individuals in the past year.',
+      image: '/images/community_work/community_work_two.jpg',
+      icon: <Shirt className="h-8 w-8" />,
+      needs: ['New and gently used shoes', 'Volunteers for collection', 'Distribution partners'],
+      schedule: 'Monthly drives with year-round collection',
+      category: 'Essential Needs',
+      badge: 'Dignity',
+      badgeColor: 'bg-green-100 text-green-800',
+      emoji: '👟'
+    },
+    {
+      id: 3,
+      title: 'Care Home Visits',
+      description: 'Bringing joy, companionship, and spiritual support to residents in local care homes through regular visits and activities.',
+      impact: 'Visiting 3 care homes monthly, bringing comfort and connection to over 100 elderly residents.',
+      image: '/images/charity_photos/care_home.jpg',
+      icon: <Heart className="h-8 w-8" />,
+      needs: ['Volunteers for visits', 'Activity materials', 'Transportation'],
+      schedule: 'Every Sunday afternoon, 2:00 PM - 4:00 PM',
+      category: 'Elderly Care',
+      badge: 'Companionship',
+      badgeColor: 'bg-purple-100 text-purple-800',
+      emoji: '🧓'
+    },
+    {
+      id: 4,
+      title: 'Children Support Programs',
+      description: 'Supporting children through educational assistance, mentorship, and providing essential supplies for their development.',
+      impact: 'Supporting 75+ children annually with educational resources, mentorship, and essential supplies.',
+      image: '/images/charity_photos/children_support.jpg',
+      icon: <Baby className="h-8 w-8" />,
+      needs: ['Educational materials', 'Mentors', 'School supplies', 'Meeting space'],
+      schedule: 'Every Tuesday & Thursday, 4:00 PM - 6:00 PM',
+      category: 'Youth Support',
+      badge: 'Future',
+      badgeColor: 'bg-yellow-100 text-yellow-800',
+      emoji: '👶'
+    },
+    {
+      id: 5,
+      title: 'Men\'s Mental Health Awareness',
+      description: 'Creating safe spaces for men to discuss mental health, providing support groups, and raising awareness about men\'s mental wellness.',
+      impact: 'Hosting monthly support groups and awareness events, reaching 50+ men annually.',
+      image: '/images/charity_photos/men_mental_health_event.jpg',
+      icon: <Brain className="h-8 w-8" />,
+      needs: ['Mental health professionals', 'Meeting space', 'Educational materials'],
+      schedule: 'Monthly support groups and quarterly awareness events',
+      category: 'Mental Health',
+      badge: 'Wellness',
+      badgeColor: 'bg-red-100 text-red-800',
+      emoji: '🧠'
+    },
+    {
+      id: 6,
+      title: 'Spiritual & Life Counseling',
+      description: 'Offering spiritual guidance, emotional support, and life coaching for those facing challenges and seeking direction.',
+      impact: 'Providing counseling support to hundreds of individuals annually through one-on-one and group sessions.',
+      image: '/images/charity_photos/care_home_one.JPG',
+      icon: <Users2 className="h-8 w-8" />,
+      needs: ['Trained counselors', 'Prayer warriors', 'Confidential meeting spaces'],
+      schedule: 'By appointment and weekly group sessions',
+      category: 'Mental Health',
+      badge: 'Guidance',
+      badgeColor: 'bg-indigo-100 text-indigo-800',
+      emoji: '🙏'
     },
   ];
 
@@ -89,24 +197,51 @@ const CommunityServices = () => {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Why We Serve Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mb-6">
+              <HandHeart className="h-8 w-8" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Why We Serve</h2>
+            <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+              Our faith moves us to act. At RCCG Place of Victory, we go beyond Sunday sermons. 
+              Through food, clothing, emotional support, and presence, we express God's love in 
+              tangible ways to those around us.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Services Grid */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Outreach Programs</h2>
+            <p className="text-xl text-gray-700">
+              Comprehensive support services designed to meet the diverse needs of our community
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
               <div 
                 key={service.id} 
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img 
                     src={service.image} 
                     alt={service.title}
                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
-                    }}
                   />
+                  <div className="absolute top-4 left-4 flex items-center space-x-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${service.badgeColor}`}>
+                      {service.badge}
+                    </span>
+                    <span className="text-2xl">{service.emoji}</span>
+                  </div>
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
                     <div className="text-white text-center p-4">
                       <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm mb-4">
@@ -118,16 +253,19 @@ const CommunityServices = () => {
                 </div>
                 
                 <div className="p-6">
-                  <p className="text-gray-700 mb-4">{service.description}</p>
+                  <p className="text-gray-700 mb-4 leading-relaxed">{service.description}</p>
                   
                   <div className="mb-4">
-                    <h4 className="text-lg font-semibold text-primary-600 mb-2">Impact</h4>
+                    <h4 className="text-lg font-semibold text-primary-600 mb-2 flex items-center">
+                      <Star className="h-5 w-5 mr-2" />
+                      Impact
+                    </h4>
                     <p className="text-gray-600">{service.impact}</p>
                   </div>
                   
                   <div className="mb-4">
                     <h4 className="text-lg font-semibold text-primary-600 mb-2">Current Needs</h4>
-                    <ul className="list-disc list-inside text-gray-600">
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
                       {service.needs.map((need, index) => (
                         <li key={index}>{need}</li>
                       ))}
@@ -135,27 +273,17 @@ const CommunityServices = () => {
                   </div>
                   
                   <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-primary-600 mb-2">Schedule</h4>
-                    <p className="text-gray-600 flex items-center">
+                    <h4 className="text-lg font-semibold text-primary-600 mb-2 flex items-center">
                       <Clock className="h-5 w-5 mr-2" />
-                      {service.schedule}
-                    </p>
+                      Schedule
+                    </h4>
+                    <p className="text-gray-600">{service.schedule}</p>
                   </div>
                   
-                  <div className="flex flex-wrap gap-3">
-                    <button 
-                      onClick={() => window.location.href = '/volunteer'}
-                      className="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors flex items-center justify-center"
-                    >
-                      Volunteer
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </button>
-                    <button 
-                      onClick={() => window.location.href = '/donate'}
-                      className="flex-1 px-4 py-2 bg-white border border-primary-600 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                    >
-                      Donate
-                    </button>
+                  <div className="text-center">
+                    <p className="text-gray-600 italic">
+                      Get involved through prayer, giving, or showing up.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -164,31 +292,99 @@ const CommunityServices = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Gallery of Love in Action */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Join Us in Making a Difference
-            </h2>
-            <p className="text-xl text-gray-700 mb-8">
-              Your time, talents, and resources can help us expand our impact and serve more people in our community.
-              Whether you can volunteer, donate, or spread the word, every contribution makes a difference.
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Gallery of Love in Action</h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              See our ministry in action through these moments of service, love, and transformation.
             </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {galleryImages.map((image) => (
+              <div key={image.id} className="relative group cursor-pointer">
+                <div className="aspect-[3/4] overflow-hidden rounded-lg shadow-md">
+                  <img 
+                    src={image.src} 
+                    alt={image.alt}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
+                    <div className="p-3 w-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="text-white text-sm font-medium">{image.caption}</p>
+                      <p className="text-white/80 text-xs">{image.category}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Strengthened CTA Section */}
+      <section className="py-20 bg-primary-700 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Let Your Hands Be an Answer to Someone's Prayer</h2>
+            <p className="text-xl mb-8 opacity-90">
+              Every act of service, every donation, every moment of your time can transform a life 
+              and bring hope to our community. Join us in making a tangible difference.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-4xl mb-4">💖</div>
+                <h3 className="text-xl font-semibold mb-2">Become a Volunteer</h3>
+                <p className="opacity-80">Share your time and talents to serve others</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-4xl mb-4">🙌</div>
+                <h3 className="text-xl font-semibold mb-2">Make a Donation</h3>
+                <p className="opacity-80">Support our programs with your resources</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-4xl mb-4">📣</div>
+                <h3 className="text-xl font-semibold mb-2">Share Our Mission</h3>
+                <p className="opacity-80">Help spread the word about our community work</p>
+              </div>
+            </div>
+            
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 to="/volunteer" 
-                className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white text-lg font-medium rounded-lg transition-colors flex items-center"
+                className="px-8 py-4 bg-white text-primary-700 hover:bg-gray-100 text-lg font-medium rounded-lg transition-colors flex items-center"
               >
                 Become a Volunteer
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
               <Link 
                 to="/donate" 
-                className="px-8 py-3 bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 text-lg font-medium rounded-lg transition-colors"
+                className="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-700 text-lg font-medium rounded-lg transition-colors"
               >
                 Make a Donation
               </Link>
+              <button 
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'RCCG Place of Victory Community Services',
+                      text: 'Join us in serving our community with love and compassion.',
+                      url: window.location.href
+                    });
+                  } else {
+                    // Fallback for browsers that don't support Web Share API
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }
+                }}
+                className="px-8 py-4 bg-primary-600 hover:bg-primary-800 text-white text-lg font-medium rounded-lg transition-colors flex items-center"
+              >
+                Share Our Mission
+                <Share2 className="ml-2 h-5 w-5" />
+              </button>
             </div>
           </div>
         </div>
