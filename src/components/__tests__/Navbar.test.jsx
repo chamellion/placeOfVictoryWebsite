@@ -39,22 +39,22 @@ describe('Navbar', () => {
   it('handles dropdown menus', async () => {
     render(<Navbar />);
     
-    // Find the desktop About button
+    // Find the desktop Church button (previously About)
     const mainNav = screen.getByRole('navigation', { name: 'Main navigation' });
-    const desktopButton = within(mainNav).getByRole('button', { name: /about/i });
+    const desktopButton = within(mainNav).getByRole('button', { name: /church/i });
     
     // Click to open dropdown
     await userEvent.click(desktopButton);
     
     // Wait for state update and check expanded state
     await waitFor(() => {
-      const menu = screen.getByRole('menu', { name: 'About desktop submenu' });
+      const menu = screen.getByRole('menu', { name: 'Church desktop submenu' });
       expect(menu).toBeVisible();
     });
     
     // Check dropdown items
-    const expectedItems = ['Our History', 'Leadership', 'Our Beliefs'];
-    const menu = screen.getByRole('menu', { name: 'About desktop submenu' });
+    const expectedItems = ['About Us', 'Our History', 'Leadership', 'Our Beliefs'];
+    const menu = screen.getByRole('menu', { name: 'Church desktop submenu' });
     
     expectedItems.forEach(item => {
       const menuItem = within(menu).getByRole('menuitem', { name: item });
@@ -86,7 +86,7 @@ describe('Navbar', () => {
     
     // Check dropdown buttons
     const mainNav = screen.getByRole('navigation', { name: 'Main navigation' });
-    const buttons = screen.getAllByRole('button', { name: /About|Worship & Events/ });
+    const buttons = screen.getAllByRole('button', { name: /Church|Worship & Events/ });
     const desktopButtons = buttons.filter(button => 
       button.closest('[role="navigation"]') === mainNav
     );
@@ -102,14 +102,14 @@ describe('Navbar', () => {
     const { rerender } = render(<Navbar />);
     
     // Test desktop view
-    expect(screen.getByRole('navigation', { name: 'Main navigation' })).toHaveClass('md:flex');
-    expect(screen.getByRole('button', { name: 'Open mobile menu' })).toHaveClass('md:hidden');
+    expect(screen.getByRole('navigation', { name: 'Main navigation' })).toHaveClass('lg:flex');
+    expect(screen.getByRole('button', { name: 'Open mobile menu' })).toHaveClass('lg:hidden');
     
     // Test mobile view
     mockCommonScreenSize('mobile');
     rerender(<Navbar />);
     
     expect(screen.getByRole('navigation', { name: 'Main navigation' })).toHaveClass('hidden');
-    expect(screen.getByRole('button', { name: 'Open mobile menu' })).toHaveClass('md:hidden');
+    expect(screen.getByRole('button', { name: 'Open mobile menu' })).toHaveClass('lg:hidden');
   });
 }); 

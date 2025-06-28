@@ -10,6 +10,7 @@ import Donate from './pages/Donate';
 import Prayer from './pages/Prayer';
 import CommunityServices from './pages/CommunityServices';
 import Testimonies from './pages/Testimonies';
+import BecomeAVolunteer from './pages/BecomeAVolunteer';
 import './App.css';
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
         <Route path="/prayer" element={<MainLayout><Prayer /></MainLayout>} />
         <Route path="/community-services" element={<MainLayout><CommunityServices /></MainLayout>} />
         <Route path="/testimonies" element={<MainLayout><Testimonies /></MainLayout>} />
+        <Route path="/volunteer" element={<MainLayout><BecomeAVolunteer /></MainLayout>} />
       </Routes>
     </Router>
   );

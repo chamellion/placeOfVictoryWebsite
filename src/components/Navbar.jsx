@@ -11,13 +11,14 @@ const Navbar = () => {
   const dropdownRefs = useRef({});
   const location = useLocation();
 
-  // Updated navigation structure with correct routes
+  // Updated navigation structure with grouped dropdowns for better responsiveness
   const navItems = [
     { title: 'Home', path: '/' },
     { 
-      title: 'About', 
+      title: 'Church', 
       path: '/about',
       dropdown: [
+        { title: 'About Us', path: '/about' },
         { title: 'Our History', path: '/about/history' },
         { title: 'Leadership', path: '/about/leadership' },
         { title: 'Our Beliefs', path: '/about/beliefs' },
@@ -29,11 +30,11 @@ const Navbar = () => {
       path: '/events',
       dropdown: [
         { title: 'Upcoming Events', path: '/events' },
+        { title: 'Sermons', path: '/sermons' },
         { title: 'Community Services', path: '/community-services' },
         { title: 'Prayer Requests', path: '/prayer' },
       ]
     },
-    { title: 'Sermons', path: '/sermons' },
     { title: 'Testimonies', path: '/testimonies' },
     { title: 'Contact', path: '/contact' },
   ];
@@ -121,23 +122,23 @@ const Navbar = () => {
               <img 
                 src="/rccg_logo.png" 
                 alt="RCCG Logo" 
-                className="h-12 md:h-14 w-auto"
+                className="h-10 md:h-12 lg:h-14 w-auto"
               />
-              <div className="h-12 md:h-14 w-px bg-gray-300"></div>
+              <div className="h-10 md:h-12 lg:h-14 w-px bg-gray-300"></div>
               <img 
                 src="/church_logo.jpg" 
                 alt="Place of Victory Logo" 
-                className="h-12 md:h-14 w-auto"
+                className="h-10 md:h-12 lg:h-14 w-auto"
               />
             </div>
-            <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary-600 hidden md:block">
+            <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-primary-600 hidden sm:block">
               RCCG Place of Victory
             </span>
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6" role="navigation" aria-label="Main navigation">
-            <ul className="flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6" role="navigation" aria-label="Main navigation">
+            <ul className="flex items-center space-x-4 xl:space-x-6">
               {navItems.map((item, index) => (
                 <li 
                   key={index} 
@@ -150,7 +151,7 @@ const Navbar = () => {
                     <>
                       <button
                         onClick={() => toggleDropdown(index)}
-                        className={`flex items-center px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors
+                        className={`flex items-center px-2 xl:px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-sm xl:text-base
                           ${isActive(item.path) ? 'text-primary-600' : ''}
                           ${activeDropdown === index ? 'text-primary-600 bg-gray-50' : ''}`}
                         aria-expanded={activeDropdown === index}
@@ -198,7 +199,7 @@ const Navbar = () => {
                   ) : (
                     <Link 
                       to={item.path} 
-                      className={`px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors
+                      className={`px-2 xl:px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-sm xl:text-base
                         ${isActive(item.path) ? 'text-primary-600' : ''}`}
                       aria-current={isActive(item.path) ? 'page' : undefined}
                     >
@@ -211,10 +212,20 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/donate"
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95"
+                  className="px-3 xl:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-sm xl:text-base"
                   aria-current={isActive('/donate') ? 'page' : undefined}
                 >
                   Donate
+                </Link>
+              </li>
+              {/* Volunteer Button */}
+              <li>
+                <Link
+                  to="/volunteer"
+                  className="px-3 xl:px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-sm xl:text-base"
+                  aria-current={isActive('/volunteer') ? 'page' : undefined}
+                >
+                  Volunteer
                 </Link>
               </li>
             </ul>
@@ -223,7 +234,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative z-50 p-2 text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
+            className="lg:hidden relative z-50 p-2 text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
             aria-expanded={isOpen}
             aria-label={isOpen ? 'Close mobile menu' : 'Open mobile menu'}
             aria-controls="mobile-menu"
@@ -237,7 +248,7 @@ const Navbar = () => {
         <div 
           ref={mobileMenuRef}
           id="mobile-menu"
-          className={`fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 transition-all duration-300 md:hidden
+          className={`fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 transition-all duration-300 lg:hidden
             ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
           onClick={() => setIsOpen(false)}
           role="dialog"
@@ -339,6 +350,17 @@ const Navbar = () => {
                     aria-current={isActive('/donate') ? 'page' : undefined}
                   >
                     Donate
+                  </Link>
+                </li>
+                {/* Mobile Volunteer Button */}
+                <li>
+                  <Link
+                    to="/volunteer"
+                    className="block w-full px-4 py-3 mt-4 text-center bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                    onClick={() => setIsOpen(false)}
+                    aria-current={isActive('/volunteer') ? 'page' : undefined}
+                  >
+                    Volunteer
                   </Link>
                 </li>
               </ul>
