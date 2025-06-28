@@ -6,31 +6,21 @@ const About = ({ section }) => {
   // Sample church history data
   const churchHistory = [
     {
-      year: '1975',
+      year: '2008',
       title: 'Church Founded',
-      description: 'RCCG Place of Victory was founded by a small group of dedicated believers who met in a local home for Bible study and prayer.'
+      description: 'Place of Victory Swansea started on Sunday 13th July 2008 with about 8 people. We started at Marriott Hotel in Waterfront, Trawler Rd, Maritime Quarter, Swansea SA1 3SS. We were at this address until we moved to Dolphin Hotel in the City Centre in September 2008.'
     },
     {
-      year: '1980',
-      title: 'First Building',
-      description: 'The congregation grew and purchased its first building, a modest structure that served as our home for 15 years.'
+      year: '2008',
+      title: 'Moved to Dolphin Hotel',
+      description: 'In September 2008, we moved from Marriott Hotel to Dolphin Hotel in the City Centre, where we continued to grow as a congregation.'
     },
     {
-      year: '1995',
+      year: '2013',
       title: 'Current Location',
-      description: 'We moved to our current location, breaking ground on a new sanctuary that continues to serve as our primary worship space.'
-    },
-    {
-      year: '2005',
-      title: 'Community Center',
-      description: 'Added the Family Life Center to expand our ministry, providing space for youth activities, community outreach, and fellowship events.'
-    },
-    {
-      year: '2018',
-      title: 'Sanctuary Expansion',
-      description: 'Completed a major renovation and expansion of our sanctuary to accommodate our growing congregation.'
+      description: 'We moved out in 2013 from Dolphin Hotel to our current location at 47B, Westbury Street, Swansea SA1 4JW, which continues to serve as our primary worship space.'
     }
-  ];
+  ]
 
   // Updated leadership team data
   const leadershipTeam = [
