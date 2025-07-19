@@ -2,11 +2,13 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { isValidCarouselSlide } from '../types/CarouselSlide';
 import { isValidEvent } from '../types/Event';
+import { isValidPastor } from '../types/Pastor';
+import { isValidTeamLead } from '../types/TeamLead';
 
 // Firebase configuration - using REACT_APP_ environment variables
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN, // Renamed to avoid AUTH warning
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
@@ -23,7 +25,7 @@ const validateFirebaseConfig = () => {
     console.error('[Firebase] Missing required environment variables:', missingFields);
     console.error('[Firebase] Please create a .env.local file with the following variables:');
     console.error('REACT_APP_FIREBASE_API_KEY=your_api_key');
-    console.error('REACT_APP_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com');
+    console.error('REACT_APP_FIREBASE_DOMAIN=your_project_id.firebaseapp.com');
     console.error('REACT_APP_FIREBASE_PROJECT_ID=your_project_id');
     console.error('REACT_APP_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com');
     console.error('REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id');
@@ -269,6 +271,218 @@ export const getPublicEvents = async () => {
       console.error('[Firebase] Firebase service unavailable. Check network connection.');
     } else if (error.code === 'not-found') {
       console.error('[Firebase] Collection not found. Verify events collection exists.');
+    }
+    
+    return [];
+  }
+}; 
+
+/**
+ * Fetches active pastors from Firestore
+ * @returns {Promise<Pastor[]>} Array of active pastors ordered by customId
+ */
+export const getPublicPastors = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return [];
+  }
+
+  try {
+    console.log('[Firebase] Fetching pastors from collection: pastors');
+    
+    const pastorsRef = collection(firestore, 'pastors');
+    const q = query(
+      pastorsRef,
+      where('category', '==', 'pastor'),
+      where('isActive', '==', true),
+      orderBy('customId', 'asc')
+    );
+
+    const querySnapshot = await getDocs(q);
+    const pastors = [];
+    const invalidPastors = [];
+
+    console.log(`[Firebase] Found ${querySnapshot.size} total documents in pastors collection`);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const pastor = {
+        id: doc.id,
+        name: data.name || '',
+        role: data.role || '',
+        image: data.image || '',
+        bio: data.bio || '',
+        customId: data.customId || '',
+        category: data.category || '',
+        isActive: data.isActive || false,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+      };
+
+      // Debug log for each pastor
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Firebase] Processing pastor ${doc.id}:`, {
+          name: pastor.name,
+          role: pastor.role,
+          customId: pastor.customId,
+          isValid: isValidPastor(pastor)
+        });
+      }
+
+      // Validate the pastor before adding it to the array
+      if (isValidPastor(pastor)) {
+        pastors.push(pastor);
+      } else {
+        invalidPastors.push({ id: doc.id, data: pastor });
+        console.warn(`[Firebase] Skipping invalid pastor: ${doc.id}`);
+      }
+    });
+
+    // Sort by customId as number (fallback to string if not numeric)
+    pastors.sort((a, b) => {
+      const aId = parseInt(a.customId) || 0;
+      const bId = parseInt(b.customId) || 0;
+      return aId - bId;
+    });
+
+    // Comprehensive development logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Firebase] Pastors summary:`);
+      console.log(`  - Total documents: ${querySnapshot.size}`);
+      console.log(`  - Valid pastors: ${pastors.length}`);
+      console.log(`  - Invalid pastors: ${invalidPastors.length}`);
+      
+      if (pastors.length === 0) {
+        console.warn('[Firebase] No valid pastors found. Possible issues:');
+        console.warn('  1. Check Firestore rules allow public reads from pastors');
+        console.warn('  2. Verify each pastor document has valid required fields');
+        console.warn('  3. Ensure category is "pastor" and isActive is true');
+        console.warn('  4. Check Firebase configuration is correct');
+        console.warn('  5. Check network connectivity to Firebase');
+      }
+      
+      if (invalidPastors.length > 0) {
+        console.warn('[Firebase] Invalid pastors details:', invalidPastors);
+      }
+    }
+
+    return pastors;
+  } catch (error) {
+    console.error('[Firebase] Error fetching pastors:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection not found. Verify pastors collection exists.');
+    }
+    
+    return [];
+  }
+}; 
+
+/**
+ * Fetches active team leads from Firestore
+ * @returns {Promise<TeamLead[]>} Array of active team leads ordered by customId
+ */
+export const getPublicTeamLeads = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return [];
+  }
+
+  try {
+    console.log('[Firebase] Fetching team leads from collection: teamLeads');
+    
+    const teamLeadsRef = collection(firestore, 'teamLeads');
+    const q = query(
+      teamLeadsRef,
+      where('category', '==', 'teamLead'),
+      where('isActive', '==', true),
+      orderBy('customId', 'asc')
+    );
+
+    const querySnapshot = await getDocs(q);
+    const teamLeads = [];
+    const invalidTeamLeads = [];
+
+    console.log(`[Firebase] Found ${querySnapshot.size} total documents in teamLeads collection`);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const teamLead = {
+        id: doc.id,
+        name: data.name || '',
+        role: data.role || '',
+        image: data.image || '',
+        bio: data.bio || '',
+        customId: data.customId || '',
+        category: data.category || '',
+        isActive: data.isActive || false,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+      };
+
+      // Debug log for each team lead
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Firebase] Processing team lead ${doc.id}:`, {
+          name: teamLead.name,
+          role: teamLead.role,
+          customId: teamLead.customId,
+          isValid: isValidTeamLead(teamLead)
+        });
+      }
+
+      // Validate the team lead before adding it to the array
+      if (isValidTeamLead(teamLead)) {
+        teamLeads.push(teamLead);
+      } else {
+        invalidTeamLeads.push({ id: doc.id, data: teamLead });
+        console.warn(`[Firebase] Skipping invalid team lead: ${doc.id}`);
+      }
+    });
+
+    // Sort by customId as number (fallback to string if not numeric)
+    teamLeads.sort((a, b) => {
+      const aId = parseInt(a.customId) || 0;
+      const bId = parseInt(b.customId) || 0;
+      return aId - bId;
+    });
+
+    // Comprehensive development logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Firebase] Team leads summary:`);
+      console.log(`  - Total documents: ${querySnapshot.size}`);
+      console.log(`  - Valid team leads: ${teamLeads.length}`);
+      console.log(`  - Invalid team leads: ${invalidTeamLeads.length}`);
+      
+      if (teamLeads.length === 0) {
+        console.warn('[Firebase] No valid team leads found. Possible issues:');
+        console.warn('  1. Check Firestore rules allow public reads from teamLeads');
+        console.warn('  2. Verify each team lead document has valid required fields');
+        console.warn('  3. Ensure category is "teamLead" and isActive is true');
+        console.warn('  4. Check Firebase configuration is correct');
+        console.warn('  5. Check network connectivity to Firebase');
+      }
+      
+      if (invalidTeamLeads.length > 0) {
+        console.warn('[Firebase] Invalid team leads details:', invalidTeamLeads);
+      }
+    }
+
+    return teamLeads;
+  } catch (error) {
+    console.error('[Firebase] Error fetching team leads:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection not found. Verify teamLeads collection exists.');
     }
     
     return [];

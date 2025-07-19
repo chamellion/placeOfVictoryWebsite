@@ -24,6 +24,30 @@ service cloud.firestore {
       // Validate document structure on write
       allow create, update: if request.auth != null && validateEvent(resource.data);
     }
+    
+    // Pastors collection
+    match /pastors/{document} {
+      // Allow public read access to active pastors
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validatePastor(resource.data);
+    }
+    
+    // Team leads collection
+    match /teamLeads/{document} {
+      // Allow public read access to active team leads
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateTeamLead(resource.data);
+    }
   }
   
   // Validation function for carousel slides
@@ -84,5 +108,59 @@ service cloud.firestore {
       // Validate time format (HH:mm)
       data.startTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$') &&
       data.endTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$');
+  }
+  
+  // Validation function for pastors
+  function validatePastor(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
+      data.name is string &&
+      data.name.size() > 0 &&
+      data.role is string &&
+      data.role.size() > 0 &&
+      data.image is string &&
+      data.image.size() > 0 &&
+      data.bio is string &&
+      data.bio.size() > 0 &&
+      data.customId is string &&
+      data.customId.size() > 0 &&
+      data.category is string &&
+      data.category == 'pastor' &&
+      data.isActive is bool &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate URL format for image (basic check)
+      data.image.matches('^https?://.*');
+  }
+  
+  // Validation function for team leads
+  function validateTeamLead(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
+      data.name is string &&
+      data.name.size() > 0 &&
+      data.role is string &&
+      data.role.size() > 0 &&
+      data.image is string &&
+      data.image.size() > 0 &&
+      data.bio is string &&
+      data.bio.size() > 0 &&
+      data.customId is string &&
+      data.customId.size() > 0 &&
+      data.category is string &&
+      data.category == 'teamLead' &&
+      data.isActive is bool &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate URL format for image (basic check)
+      data.image.matches('^https?://.*');
   }
 } 
