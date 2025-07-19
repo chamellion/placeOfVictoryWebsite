@@ -1,90 +1,55 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ChevronRight, ChevronLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, Clock, MapPin, ChevronRight, ChevronLeft } from 'lucide-react';
+import useSWR from 'swr';
+import { getPublicEvents } from '../lib/firebaseClient';
+import { isValidEvent, formatEventDateTime, parseEventDate } from '../types/Event';
 
 const Events = () => {
   // Current date for the calendar
   const [currentMonth, setCurrentMonth] = useState(new Date());
   
-  // Sample events data
-  const events = [
-    {
-      id: 1,
-      title: 'Sunday Worship Service',
-      date: new Date(2025, 4, 25), // May 25, 2025
-      time: '9:00 AM & 11:00 AM',
-      location: 'Main Sanctuary',
-      description: 'Join us for our weekly worship service featuring contemporary music, biblical teaching, and community.',
-      registrationLink: '#',
-      capacity: 250,
-      category: 'Worship'
-    },
-    {
-      id: 2,
-      title: 'Bible Study Group',
-      date: new Date(2025, 4, 27), // May 27, 2025
-      time: '7:00 PM - 8:30 PM',
-      location: 'Fellowship Hall',
-      description: 'Our midweek Bible study focuses on diving deeper into Scripture and applying it to our daily lives.',
-      registrationLink: '#',
-      capacity: 50,
-      category: 'Study'
-    },
-    {
-      id: 3,
-      title: 'Youth Night',
-      date: new Date(2025, 4, 29), // May 29, 2025
-      time: '6:30 PM - 9:00 PM',
-      location: 'Youth Center',
-      description: 'A fun night for teens featuring games, worship, a short message, and small group discussions.',
-      registrationLink: '#',
-      capacity: 75,
-      category: 'Youth'
-    },
-    {
-      id: 4,
-      title: 'Community Outreach',
-      date: new Date(2025, 5, 5), // June 5, 2025
-      time: '10:00 AM - 2:00 PM',
-      location: 'Downtown Community Center',
-      description: 'Volunteer to serve our community through food distribution, cleanup projects, and relationship building.',
-      registrationLink: '#',
-      capacity: 100,
-      category: 'Outreach'
-    },
-    {
-      id: 5,
-      title: 'Marriage Retreat',
-      date: new Date(2025, 5, 12), // June 12, 2025
-      time: '9:00 AM - 5:00 PM',
-      location: 'Mountain View Retreat Center',
-      description: 'A full-day retreat for married couples focusing on strengthening relationships through communication and faith.',
-      registrationLink: '#',
-      capacity: 20,
-      category: 'Retreat'
-    },
-    {
-      id: 6,
-      title: 'Children\'s VBS',
-      date: new Date(2025, 5, 19), // June 19, 2025
-      time: '9:00 AM - 12:00 PM',
-      location: 'Children\'s Ministry Wing',
-      description: 'Our annual Vacation Bible School for children ages 5-12. Five days of fun, crafts, music, and Bible lessons.',
-      registrationLink: '#',
-      capacity: 120,
-      category: 'Children'
-    },
-    {
-      id: 7,
-      title: 'Battlefield of the Mind',
-      date: new Date(2025, 6, 1), // July 01, 2025
-      time: '6:30 PM - 8:00 PM',
-      location: 'Main Sanctuary',
-      description: '🎉Calling all young adults to this edition of the YASF meeting. Date➡️1st July. Time🔄6:30pm. It promises to be nothing short of educative & inspiring',
-      registrationLink: '#',
-      capacity: 400,
-      category: 'Young Adults and Singles Fellowship'
-    },
-  ];
+  // Fetch events from Firestore with SWR caching
+  const { data: firestoreEvents = [], isLoading, error } = useSWR(
+    'events',
+    getPublicEvents,
+    { 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
+    }
+  );
+  
+  // Filter and validate events from Firestore
+  const events = firestoreEvents
+    .filter(event => isValidEvent(event))
+    .map(event => ({
+      ...event,
+      date: parseEventDate(event.date), // Convert string to Date object for calendar
+      time: `${event.startTime} - ${event.endTime}`, // Format time for display
+      formattedDateTime: formatEventDateTime(event.date, event.startTime, event.endTime)
+    }));
+  
+  // Debug logging for events data
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Events] Data status:', {
+        isLoading,
+        hasError: !!error,
+        totalEvents: firestoreEvents.length,
+        validEvents: events.length
+      });
+      
+      if (events.length > 0) {
+        console.log('[Events] Valid events loaded:', events.map(event => ({
+          id: event.id,
+          title: event.title,
+          date: event.date,
+          location: event.location,
+          formattedDateTime: event.formattedDateTime
+        })));
+      }
+    }
+  }, [firestoreEvents, events, isLoading, error]);
   
   // Get upcoming events (events after today)
   const today = new Date();
@@ -252,43 +217,44 @@ const Events = () => {
               <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
                 
-                {upcomingEvents.length > 0 ? (
+                {isLoading ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600 mx-auto mb-4"></div>
+                    <p className="text-gray-700">Loading events...</p>
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-8">
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                      <p className="text-yellow-700 mb-2">Unable to load events</p>
+                      <button 
+                        onClick={() => window.location.reload()} 
+                        className="text-yellow-600 hover:text-yellow-700 font-medium text-sm"
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  </div>
+                ) : upcomingEvents.length > 0 ? (
                   <div className="space-y-6">
                     {upcomingEvents.slice(0, 5).map((event) => (
                       <div key={event.id} className="border-l-4 border-primary-600 pl-4">
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">{event.title}</h3>
                         <div className="flex items-center text-gray-700 mb-2">
                           <Calendar className="h-4 w-4 mr-2 text-primary-600" />
-                          <span>{formatDate(event.date)}</span>
+                          <span>{event.formattedDateTime}</span>
                         </div>
-                        <div className="flex items-center text-gray-700 mb-2">
-                          <Clock className="h-4 w-4 mr-2 text-primary-600" />
-                          <span>{event.time}</span>
-                        </div>
-                        <div className="flex items-center text-gray-700 mb-2">
+                        <div className="flex items-center text-gray-700 mb-3">
                           <MapPin className="h-4 w-4 mr-2 text-primary-600" />
                           <span>{event.location}</span>
                         </div>
-                        <div className="flex items-center text-gray-700 mb-3">
-                          <Users className="h-4 w-4 mr-2 text-primary-600" />
-                          <span>Capacity: {event.capacity}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded">
-                            {event.category}
-                          </span>
-                          <a 
-                            href={event.registrationLink} 
-                            className="text-primary-600 hover:text-primary-700 font-medium text-sm"
-                          >
-                            Register Now
-                          </a>
-                        </div>
+                        <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+                          {event.description}
+                        </p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-700">No upcoming events at this time.</p>
+                  <p className="text-gray-700">No events found.</p>
                 )}
                 
                 {upcomingEvents.length > 5 && (

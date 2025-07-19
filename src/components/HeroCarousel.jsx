@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import useSWR from 'swr';
+import { getPublicCarouselSlides } from '../lib/firebaseClient';
+import { isValidCarouselSlide } from '../types/CarouselSlide';
 
 const HeroCarousel = () => {
+  // Note: This component uses Firestore ONLY for carousel images
+  // Headline, subheadline, and CTA buttons are hardcoded and ignore Firestore values
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
@@ -13,83 +15,65 @@ const HeroCarousel = () => {
   const intervalRef = useRef(null);
   const transitionTimeoutRef = useRef(null);
   const carouselRef = useRef(null);
-  const imageLoadPromises = useRef([]);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
-  // Load images from the carousel directory
+  // Fetch carousel slides from Firestore with SWR caching
+  const { data: slides = [], isLoading, error } = useSWR(
+    'carousel',
+    getPublicCarouselSlides,
+    { 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
+    }
+  );
+
+  // Filter out any invalid slides that might have slipped through
+  const validSlides = slides.filter(slide => {
+    if (!isValidCarouselSlide(slide)) {
+      console.warn(`[HeroCarousel] Skipping invalid slide ${slide?.id || 'unknown'}`);
+      return false;
+    }
+    return true;
+  });
+
+  // Debug logging for carousel data
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        // List of expected images in the carousel directory
-        const expectedImages = [
-          'church-worship.jpg',
-          'church-community.jpg',
-          'church-building.jpg',
-          'church-service.jpg',
-          'church-fellowship.jpg',
-          'church-photo-one.jpg',
-          'church-photo-two.jpg',
-          'church-photo-three.jpg',
-          'church-photo-four.jpg',
-          'church-photo-five.jpg',
-        ];
-
-        // Create an array of image load promises
-        imageLoadPromises.current = expectedImages.map(imageName => {
-          return new Promise((resolve, reject) => {
-            const img = new Image();
-            const imagePath = `/media/carousel/${imageName}`;
-            
-            img.onload = () => resolve({ path: imagePath, name: imageName });
-            img.onerror = () => reject(new Error(`Failed to load image: ${imagePath}`));
-            img.src = imagePath;
-          });
-        });
-
-        // Wait for all images to load
-        const loadedImages = await Promise.allSettled(imageLoadPromises.current);
-        
-        // Filter out failed loads and map to paths
-        const validImages = loadedImages
-          .filter(result => result.status === 'fulfilled')
-          .map(result => result.value.path);
-
-        if (validImages.length === 0) {
-          throw new Error('No carousel images could be loaded');
-        }
-
-        setImages(validImages);
-      } catch (err) {
-        console.error('Error loading carousel images:', err);
-        setError(err.message || 'Failed to load carousel images');
-      } finally {
-        setIsLoading(false);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[HeroCarousel] Data status:', {
+        isLoading,
+        hasError: !!error,
+        totalSlides: slides.length,
+        validSlides: validSlides.length,
+        currentIndex
+      });
+      
+      if (validSlides.length > 0) {
+        console.log('[HeroCarousel] Valid slides loaded (images only):', validSlides.map(slide => ({
+          id: slide.id,
+          imageUrl: slide.imageUrl,
+          isVisible: slide.isVisible,
+          order: slide.order
+          // Note: headline, subheadline, ctaText, ctaLink are ignored - using hardcoded values
+        })));
       }
-    };
+    }
+  }, [slides, validSlides, isLoading, error, currentIndex]);
 
-    loadImages();
-
-    // Cleanup function
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-      }
-    };
-  }, []);
+  // Reset current index if it's out of bounds
+  useEffect(() => {
+    if (validSlides.length > 0 && currentIndex >= validSlides.length) {
+      setCurrentIndex(0);
+    }
+  }, [validSlides.length, currentIndex]);
 
   // Auto-advance carousel with pause on hover
   useEffect(() => {
-    if (images.length > 1 && !isPaused) {
+    if (validSlides.length > 1 && !isPaused) {
       intervalRef.current = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % validSlides.length);
       }, 8000);
     }
     return () => {
@@ -97,7 +81,7 @@ const HeroCarousel = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [images.length, isPaused]);
+  }, [validSlides.length, isPaused]);
 
   const transitionToSlide = (newIndex) => {
     if (isTransitioning) return;
@@ -116,14 +100,14 @@ const HeroCarousel = () => {
 
   const goToPrevious = () => {
     if (isTransitioning) return;
-    const newIndex = (currentIndex - 1 + images.length) % images.length;
+    const newIndex = (currentIndex - 1 + validSlides.length) % validSlides.length;
     transitionToSlide(newIndex);
     resetAutoAdvance();
   };
 
   const goToNext = () => {
     if (isTransitioning) return;
-    const newIndex = (currentIndex + 1) % images.length;
+    const newIndex = (currentIndex + 1) % validSlides.length;
     transitionToSlide(newIndex);
     resetAutoAdvance();
   };
@@ -138,7 +122,7 @@ const HeroCarousel = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % validSlides.length);
       }, 8000);
     }
   };
@@ -176,41 +160,33 @@ const HeroCarousel = () => {
       <div className="relative h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-700">Loading carousel images...</p>
+          <p className="mt-4 text-gray-700">Loading carousel...</p>
         </div>
       </div>
     );
   }
 
   if (error) {
+    console.error('Error loading carousel:', error);
     return (
       <div className="relative h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center max-w-2xl mx-auto px-4">
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-yellow-800 mb-4">Carousel Images Not Found</h2>
-            <p className="text-yellow-700 mb-4">{error}</p>
-            <p className="text-sm text-yellow-600">
-              Please ensure the following images are in the /public/media/carousel/ directory:
-            </p>
-            <ul className="mt-2 text-sm text-yellow-600 list-disc list-inside">
-              <li>church-worship.jpg</li>
-              <li>church-community.jpg</li>
-              <li>church-building.jpg</li>
-              <li>church-service.jpg</li>
-              <li>church-fellowship.jpg</li>
-              <li>church-photo-one.jpg</li>
-              <li>church-photo-two.jpg</li>
-              <li>church-photo-three.jpg</li>
-              <li>church-photo-four.jpg</li>
-              <li>church-photo-five.jpg</li>
-            </ul>
+            <h2 className="text-2xl font-bold text-yellow-800 mb-4">Unable to Load Carousel</h2>
+            <p className="text-yellow-700 mb-4">There was an error loading the carousel content. Please try refreshing the page.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-colors"
+            >
+              Refresh Page
+            </button>
           </div>
         </div>
       </div>
     );
   }
 
-  if (images.length === 0) {
+  if (validSlides.length === 0) {
     return (
       <div className="relative h-screen flex items-center justify-center bg-gray-100">
         <div className="absolute inset-0 z-0">
@@ -230,9 +206,39 @@ const HeroCarousel = () => {
           <p className="text-xl md:text-2xl lg:text-3xl max-w-3xl mx-auto mb-8">
             Join us in worship, community, and service as we grow together in faith.
           </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a 
+              href="/about" 
+              className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white text-lg font-medium rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            >
+              Learn More
+            </a>
+            <button 
+              onClick={() => {
+                const serviceTimesElement = document.getElementById('service-times');
+                if (serviceTimesElement) {
+                  serviceTimesElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                  window.location.href = '/about/services';
+                }
+              }}
+              className="px-8 py-3 bg-white hover:bg-gray-100 text-gray-900 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+              type="button"
+            >
+              View Service Times
+            </button>
+          </div>
         </div>
       </div>
     );
+  }
+
+  // Get current slide with defensive handling
+  const currentSlide = validSlides[currentIndex];
+  if (!currentSlide) {
+    console.error('HeroCarousel: Current slide is undefined, resetting to first slide');
+    setCurrentIndex(0);
+    return null;
   }
 
   return (
@@ -247,9 +253,9 @@ const HeroCarousel = () => {
     >
       {/* Carousel Images */}
       <div className="relative h-full">
-        {images.map((image, index) => (
+        {validSlides.map((slide, index) => (
           <div
-            key={index}
+            key={slide.id}
             className={`absolute inset-0 transform transition-all duration-500 ease-out ${
               index === currentIndex 
                 ? 'opacity-100 translate-x-0 z-10' 
@@ -264,15 +270,21 @@ const HeroCarousel = () => {
             }}
           >
             <img
-              src={image}
-              alt={`Church carousel image ${index + 1}`}
+              src={slide.imageUrl}
+              alt="RCCG Place of Victory Carousel Image"
               className="w-full h-full object-cover"
               loading={index === 0 ? "eager" : "lazy"}
               style={{
                 transform: 'translateZ(0)',
                 backfaceVisibility: 'hidden',
               }}
+              onLoad={() => {
+                if (process.env.NODE_ENV === 'development') {
+                  console.log(`[HeroCarousel] Successfully loaded image for slide ${slide.id}:`, slide.imageUrl);
+                }
+              }}
               onError={(e) => {
+                console.warn(`[HeroCarousel] Failed to load carousel image for slide ${slide.id}:`, slide.imageUrl);
                 e.target.onerror = null;
                 e.target.src = '/media/carousel/church-worship.jpg';
               }}
@@ -286,7 +298,7 @@ const HeroCarousel = () => {
       </div>
 
       {/* Navigation Arrows */}
-      {images.length > 1 && (
+      {validSlides.length > 1 && (
         <div className="absolute inset-0 z-30 pointer-events-none">
           <div className="relative h-full">
             <button
@@ -336,9 +348,9 @@ const HeroCarousel = () => {
       )}
 
       {/* Navigation Dots */}
-      {images.length > 1 && (
+      {validSlides.length > 1 && (
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3 pointer-events-none">
-          {images.map((_, index) => (
+          {validSlides.map((_, index) => (
             <button
               key={index}
               onClick={(e) => {
@@ -365,15 +377,18 @@ const HeroCarousel = () => {
         </div>
       )}
 
-      {/* Hero Content */}
+      {/* Hero Content - Hardcoded Text (Firestore only used for images) */}
       <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
         <div className="text-center text-white px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto transform transition-all duration-500 ease-out">
+          {/* Hardcoded headline - ignoring Firestore headline values */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 transform transition-all duration-500 ease-out">
             Welcome to RCCG Place of Victory
           </h1>
+          {/* Hardcoded subheadline - ignoring Firestore subheadline values */}
           <p className="text-xl md:text-2xl lg:text-3xl max-w-3xl mx-auto mb-8 transform transition-all duration-500 ease-out">
             Join us in worship, community, and service as we grow together in faith.
           </p>
+          {/* Hardcoded CTA buttons - ignoring Firestore ctaText and ctaLink values */}
           <div className="flex flex-wrap justify-center gap-4 transform transition-all duration-500 ease-out pointer-events-auto">
             <a 
               href="/about" 

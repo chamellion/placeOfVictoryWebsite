@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, MapPin, Phone, Mail } from 'lucide-react';
+import { Facebook, Instagram, MapPin, Phone, Mail } from 'lucide-react';
 
 // Create a custom YouTube icon component
 const YoutubeIcon = ({ size = 24, ...props }) => (
@@ -42,16 +42,34 @@ const Footer = () => {
               Bringing hope, sharing faith, and serving our community with God's love.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-gray-300 hover:text-white transition-colors" aria-label="Facebook">
+              <a 
+                href="https://www.facebook.com/share/1AnoUwe1t1/?mibextid=wwXIfr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-500 transition-colors duration-200 transform hover:scale-110" 
+                aria-label="Follow us on Facebook"
+                title="Follow us on Facebook"
+              >
                 <Facebook size={24} />
               </a>
-              <a href="https://twitter.com" className="text-gray-300 hover:text-white transition-colors" aria-label="Twitter">
-                <Twitter size={24} />
-              </a>
-              <a href="https://instagram.com" className="text-gray-300 hover:text-white transition-colors" aria-label="Instagram">
+              <a 
+                href="https://www.instagram.com/placeofvictory?igsh=d3JkdW0xc2Fnczl1&utm_source=qr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-pink-500 transition-colors duration-200 transform hover:scale-110" 
+                aria-label="Follow us on Instagram"
+                title="Follow us on Instagram"
+              >
                 <Instagram size={24} />
               </a>
-              <a href="https://youtube.com" className="text-gray-300 hover:text-white transition-colors" aria-label="YouTube">
+              <a 
+                href="https://www.youtube.com/@rccgplaceofvictoryswansea" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-red-500 transition-colors duration-200 transform hover:scale-110" 
+                aria-label="Subscribe to our YouTube channel"
+                title="Subscribe to our YouTube channel"
+              >
                 <YoutubeIcon size={24} />
               </a>
             </div>
@@ -111,7 +129,13 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
-                <span className="text-lg text-gray-300">(123) 456-7890</span>
+                <a 
+                  href="tel:01792424591" 
+                  className="text-lg text-gray-300 hover:text-white transition-colors"
+                  aria-label="Call us at 01792 424591"
+                >
+                  01792 424591
+                </a>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
