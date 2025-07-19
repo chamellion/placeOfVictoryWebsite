@@ -36,25 +36,59 @@ describe('Navbar', () => {
     expect(mobileMenu).toHaveClass('invisible');
   });
 
-  it('handles dropdown menus', async () => {
+  it('handles About dropdown menu', async () => {
     render(<Navbar />);
     
-    // Find the desktop Church button (previously About)
+    // Find the desktop About button
     const mainNav = screen.getByRole('navigation', { name: 'Main navigation' });
-    const desktopButton = within(mainNav).getByRole('button', { name: /church/i });
+    const aboutButton = within(mainNav).getByRole('button', { name: 'About' });
     
     // Click to open dropdown
-    await userEvent.click(desktopButton);
+    await userEvent.click(aboutButton);
     
     // Wait for state update and check expanded state
     await waitFor(() => {
-      const menu = screen.getByRole('menu', { name: 'Church desktop submenu' });
+      const menu = screen.getByRole('menu', { name: 'About desktop submenu' });
       expect(menu).toBeVisible();
     });
     
     // Check dropdown items
-    const expectedItems = ['About Us', 'Our History', 'Leadership', 'Our Beliefs'];
-    const menu = screen.getByRole('menu', { name: 'Church desktop submenu' });
+    const expectedItems = ['Who We Are', 'Leadership', 'Beliefs'];
+    const menu = screen.getByRole('menu', { name: 'About desktop submenu' });
+    
+    expectedItems.forEach(item => {
+      const menuItem = within(menu).getByRole('menuitem', { name: item });
+      expect(menuItem).toBeInTheDocument();
+    });
+    
+    // Click outside to close
+    await userEvent.click(document.body);
+    
+    // Wait for state update
+    await waitFor(() => {
+      expect(menu).toHaveClass('pointer-events-none');
+    });
+  });
+
+  it('handles Ministry dropdown menu', async () => {
+    render(<Navbar />);
+    
+    // Find the desktop Ministry button
+    const mainNav = screen.getByRole('navigation', { name: 'Main navigation' });
+    const ministryButton = within(mainNav).getByRole('button', { name: 'Ministry' });
+    
+    // Click to open dropdown
+    await userEvent.click(ministryButton);
+    
+    // Wait for state update and check expanded state
+    await waitFor(() => {
+      const menu = screen.getByRole('menu', { name: 'Ministry desktop submenu' });
+      expect(menu).toBeVisible();
+    });
+    
+    // Check dropdown items
+    const expectedItems = ['Service Times', 'Events', 'Community Outreach', 'Testimonies', 'Prayer Requests'];
+    const menu = screen.getByRole('menu', { name: 'Ministry desktop submenu' });
     
     expectedItems.forEach(item => {
       const menuItem = within(menu).getByRole('menuitem', { name: item });
@@ -86,16 +120,18 @@ describe('Navbar', () => {
     
     // Check dropdown buttons
     const mainNav = screen.getByRole('navigation', { name: 'Main navigation' });
-    const buttons = screen.getAllByRole('button', { name: /Church|Worship & Events/ });
-    const desktopButtons = buttons.filter(button => 
-      button.closest('[role="navigation"]') === mainNav
-    );
+    const aboutButton = within(mainNav).getByRole('button', { name: 'About' });
+    const ministryButton = within(mainNav).getByRole('button', { name: 'Ministry' });
     
-    desktopButtons.forEach(button => {
-      expect(button).toHaveAttribute('aria-haspopup', 'true');
-      expect(button).toHaveAttribute('aria-expanded', 'false');
-      expect(button).toHaveAttribute('aria-controls');
-    });
+    // Check About button accessibility
+    expect(aboutButton).toHaveAttribute('aria-haspopup', 'true');
+    expect(aboutButton).toHaveAttribute('aria-expanded', 'false');
+    expect(aboutButton).toHaveAttribute('aria-controls', 'dropdown-menu-1');
+    
+    // Check Ministry button accessibility
+    expect(ministryButton).toHaveAttribute('aria-haspopup', 'true');
+    expect(ministryButton).toHaveAttribute('aria-expanded', 'false');
+    expect(ministryButton).toHaveAttribute('aria-controls', 'dropdown-menu-2');
   });
 
   it('is responsive across different screen sizes', async () => {
