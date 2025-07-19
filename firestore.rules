@@ -1,0 +1,166 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Carousel collection
+    match /carousel/{document} {
+      // Allow public read access to visible slides
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateCarouselSlide(resource.data);
+    }
+    
+    // Events collection
+    match /events/{document} {
+      // Allow public read access to all events
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateEvent(resource.data);
+    }
+    
+    // Pastors collection
+    match /pastors/{document} {
+      // Allow public read access to active pastors
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validatePastor(resource.data);
+    }
+    
+    // Team leads collection
+    match /teamLeads/{document} {
+      // Allow public read access to active team leads
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateTeamLead(resource.data);
+    }
+  }
+  
+  // Validation function for carousel slides
+  function validateCarouselSlide(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['imageUrl', 'headline', 'subheadline', 'isVisible', 'order']) &&
+      data.imageUrl is string &&
+      data.imageUrl.size() > 0 &&
+      data.headline is string &&
+      data.headline.size() > 0 &&
+      data.subheadline is string &&
+      data.subheadline.size() > 0 &&
+      data.isVisible is bool &&
+      data.order is number &&
+      data.order >= 0 &&
+      
+      // Optional fields must be strings if present
+      (data.ctaText == null || (data.ctaText is string)) &&
+      (data.ctaLink == null || (data.ctaLink is string)) &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate URL format for imageUrl (basic check)
+      data.imageUrl.matches('^https?://.*') &&
+      
+      // Validate URL format for ctaLink if present (basic check)
+      (data.ctaLink == null || data.ctaLink.matches('^(https?://|/).*'));
+  }
+  
+  // Validation function for events
+  function validateEvent(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['title', 'description', 'date', 'startTime', 'endTime', 'location']) &&
+      data.title is string &&
+      data.title.size() > 0 &&
+      data.description is string &&
+      data.description.size() > 0 &&
+      data.date is string &&
+      data.date.size() > 0 &&
+      data.startTime is string &&
+      data.startTime.size() > 0 &&
+      data.endTime is string &&
+      data.endTime.size() > 0 &&
+      data.location is string &&
+      data.location.size() > 0 &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate date format (YYYY-MM-DD)
+      data.date.matches('^\\d{4}-\\d{2}-\\d{2}$') &&
+      
+      // Validate time format (HH:mm)
+      data.startTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$') &&
+      data.endTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$');
+  }
+  
+  // Validation function for pastors
+  function validatePastor(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
+      data.name is string &&
+      data.name.size() > 0 &&
+      data.role is string &&
+      data.role.size() > 0 &&
+      data.image is string &&
+      data.image.size() > 0 &&
+      data.bio is string &&
+      data.bio.size() > 0 &&
+      data.customId is string &&
+      data.customId.size() > 0 &&
+      data.category is string &&
+      data.category == 'pastor' &&
+      data.isActive is bool &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate URL format for image (basic check)
+      data.image.matches('^https?://.*');
+  }
+  
+  // Validation function for team leads
+  function validateTeamLead(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
+      data.name is string &&
+      data.name.size() > 0 &&
+      data.role is string &&
+      data.role.size() > 0 &&
+      data.image is string &&
+      data.image.size() > 0 &&
+      data.bio is string &&
+      data.bio.size() > 0 &&
+      data.customId is string &&
+      data.customId.size() > 0 &&
+      data.category is string &&
+      data.category == 'teamLead' &&
+      data.isActive is bool &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate URL format for image (basic check)
+      data.image.matches('^https?://.*');
+  }
+} 

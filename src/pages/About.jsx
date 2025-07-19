@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { Target, Heart, Zap, Sprout } from 'lucide-react';
+import useSWR from 'swr';
 import FlipCard from '../components/FlipCard';
+import { getPublicPastors, getPublicTeamLeads } from '../lib/firebaseClient';
+import { isValidPastor } from '../types/Pastor';
+import { isValidTeamLead } from '../types/TeamLead';
 
 const About = ({ section }) => {
   // Sample church history data
@@ -22,139 +26,91 @@ const About = ({ section }) => {
     }
   ]
 
-  // Updated leadership team data
-  const leadershipTeam = [
+  // Fetch pastors from Firestore with SWR caching
+  const { data: firestorePastors = [], isLoading: pastorsLoading, error: pastorsError } = useSWR(
+    'pastors',
+    getPublicPastors,
     { 
-      id: 1, 
-      name: 'Jeffrey Nsofor', 
-      role: 'Lead Pastor', 
-      imageUrl: '/images/leaders/jeffrey_nsofor.jpg', 
-      bio: 'Jeffrey oversees our spiritual direction and leads with wisdom and humility. With over 15 years of pastoral experience, he is passionate about discipleship and community transformation. His leadership focuses on building strong families and equipping believers for ministry.' 
-    },
-    { 
-      id: 2, 
-      name: 'Mmesoma Nsofor', 
-      role: 'Asst. Pastor', 
-      imageUrl: '/images/leaders/mmesoma_nsofor.jpg', 
-      bio: 'Mmesoma serves alongside her husband in ministry, focusing on women\'s ministry and family counseling. She brings warmth and compassion to all she does, helping women grow in their faith and build strong family relationships.' 
-    },
-    { 
-      id: 3, 
-      name: 'Dr Adesola Ademiloye', 
-      role: 'Asst. Pastor', 
-      imageUrl: '/images/leaders/sola_ademiloye.jpg', 
-      bio: 'Dr. Ademiloye brings academic excellence and spiritual depth to our ministry. He specializes in biblical teaching and youth discipleship programs, helping young people develop a strong foundation in their faith.' 
-    },
-    { 
-      id: 4, 
-      name: 'Dr Austin Egwebe', 
-      role: 'Asst. Pastor', 
-      imageUrl: '/images/leaders/austin_egwebe.jpg', 
-      bio: 'Dr. Egwebe contributes his expertise in pastoral care and community outreach. He is dedicated to serving the congregation and reaching out to the local community with the love of Christ.' 
-    },
-    { 
-      id: 5, 
-      name: 'Temitope Olabode', 
-      role: 'HOD, Creative Arts', 
-      imageUrl: '/images/leaders/temitope_olabode.jpg', 
-      bio: 'Temitope leads our creative arts ministry, overseeing worship, music, and visual arts. She helps create meaningful worship experiences that draw people closer to God through creative expression.' 
-    },
-    { 
-      id: 6, 
-      name: 'Mrs Taiwo Ademiloye', 
-      role: 'HOD Admin & Finance', 
-      imageUrl: '/images/leaders/taiwo_ademiloye.jpg', 
-      bio: 'Mrs. Ademiloye manages our administrative and financial operations with excellence and integrity. She ensures the church runs smoothly so we can focus on ministry and outreach.' 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
     }
-  ];
+  );
+  
+  // Filter and validate pastors from Firestore
+  const leadershipTeam = firestorePastors
+    .filter(pastor => isValidPastor(pastor))
+    .map(pastor => ({
+      id: pastor.id,
+      name: pastor.name,
+      role: pastor.role,
+      imageUrl: pastor.image, // Use the image field from Firestore
+      bio: pastor.bio
+    }));
+  
+  // Debug logging for pastors data
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[About] Pastors data status:', {
+        isLoading: pastorsLoading,
+        hasError: !!pastorsError,
+        totalPastors: firestorePastors.length,
+        validPastors: leadershipTeam.length
+      });
+      
+      if (leadershipTeam.length > 0) {
+        console.log('[About] Valid pastors loaded:', leadershipTeam.map(pastor => ({
+          id: pastor.id,
+          name: pastor.name,
+          role: pastor.role,
+          imageUrl: pastor.imageUrl
+        })));
+      }
+    }
+  }, [firestorePastors, leadershipTeam, pastorsLoading, pastorsError]);
 
-  // Team Leads data
-  const teamLeads = [
+  // Fetch team leads from Firestore with SWR caching
+  const { data: firestoreTeamLeads = [], isLoading: teamLeadsLoading, error: teamLeadsError } = useSWR(
+    'teamLeads',
+    getPublicTeamLeads,
     { 
-      id: 1,
-      name: 'Ebenezer Ishola', 
-      role: 'Evangelism Team Lead', 
-      imageUrl: '/images/teams/ebenezer_ishola.jpg', 
-      bio: 'Ebenezer leads our evangelism efforts with passion and dedication. He coordinates outreach programs and equips believers to share the gospel effectively in our community and beyond.' 
-    },
-    { 
-      id: 2,
-      name: 'Francess Iyere', 
-      role: 'Drama Team Lead', 
-      imageUrl: '/images/teams/francess_iyere.jpg', 
-      bio: 'Francess directs our drama ministry, using creative arts to communicate biblical truths and engage audiences. Her team brings stories to life through powerful performances and skits.' 
-    },
-    { 
-      id: 3,
-      name: 'Busayo Fejoku', 
-      role: 'Ushering Team Lead', 
-      imageUrl: '/images/teams/busayo_fejoku.jpg', 
-      bio: 'Busayo ensures smooth operations during services by leading our ushering team. She creates a welcoming atmosphere and helps maintain order during worship services and events.' 
-    },
-    { 
-      id: 4,
-      name: 'Ayorinde Idowu', 
-      role: 'POV Men Team Lead', 
-      imageUrl: '/images/teams/ayorinde_idowu.jpg', 
-      bio: 'Ayorinde leads our men\'s ministry, focusing on spiritual growth, accountability, and fellowship. He organizes events and programs that strengthen men in their faith journey.' 
-    },
-    { 
-      id: 5,
-      name: 'Dunsin Alade', 
-      role: 'Asst. Admin', 
-      imageUrl: '/images/teams/dunsin_alade.jpg', 
-      bio: 'Dunsin supports our administrative functions with efficiency and attention to detail. He helps coordinate church activities and ensures smooth day-to-day operations.' 
-    },
-    { 
-      id: 6,
-      name: 'Lizah Urombo', 
-      role: 'Media Team Lead', 
-      imageUrl: '/images/teams/lizah_urombo.jpg', 
-      bio: 'Lizah oversees our media and communications, managing social media, website content, and digital outreach. She helps us stay connected with our congregation and community.' 
-    },
-    { 
-      id: 7,
-      name: 'Nicole Dele-Alufe', 
-      role: 'Asst. Choir Director', 
-      imageUrl: '/images/teams/nicole_dele-alufe.jpg', 
-      bio: 'Nicole supports our choir ministry with her musical talents and leadership. She helps coordinate rehearsals and performances, ensuring excellence in our worship through music.' 
-    },
-    { 
-      id: 8,
-      name: 'Rachel Igwe', 
-      role: 'Exec. Youth in Christ', 
-      imageUrl: '/images/teams/rachel_igwe.jpg', 
-      bio: 'Rachel leads our youth ministry with energy and creativity. She organizes activities, Bible studies, and events that help young people grow in their faith and build meaningful relationships.' 
-    },
-    { 
-      id: 9,
-      name: 'Taiwo Adeniye', 
-      role: 'Prayer Team Lead', 
-      imageUrl: '/images/teams/taiwo_adeniye.jpg', 
-      bio: 'Taiwo coordinates our prayer ministry, leading intercessory prayer sessions and encouraging the congregation in their prayer life. She helps maintain the spiritual foundation of our church.' 
-    },
-    { 
-      id: 10,
-      name: 'Thaina Jesus', 
-      role: 'Exec. Youth in Christ', 
-      imageUrl: '/images/teams/thaina_jesus.jpg', 
-      bio: 'Thaina works alongside our youth ministry leadership to create engaging programs and activities. She helps young people develop their faith and leadership skills through various initiatives.' 
-    },
-    { 
-      id: 11,
-      name: 'Veronica Olaosebikan', 
-      role: 'Choir Director', 
-      imageUrl: '/images/teams/veronica_olaosebikan.jpg', 
-      bio: 'Veronica leads our choir with excellence and passion for worship. She directs musical performances, coordinates rehearsals, and helps create an atmosphere of praise through music.' 
-    },
-    { 
-      id: 12,
-      name: 'Funke Balogun', 
-      role: 'Exec. Youth in Christ', 
-      imageUrl: '/images/teams/funke_balogun.jpg', 
-      bio: 'Funke contributes to our youth ministry by organizing events and mentoring young people. She helps create a supportive environment where youth can grow spiritually and develop their gifts.' 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
     }
-  ];
+  );
+  
+  // Filter and validate team leads from Firestore
+  const teamLeads = firestoreTeamLeads
+    .filter(teamLead => isValidTeamLead(teamLead))
+    .map(teamLead => ({
+      id: teamLead.id,
+      name: teamLead.name,
+      role: teamLead.role,
+      imageUrl: teamLead.image, // Use the image field from Firestore
+      bio: teamLead.bio
+    }));
+  
+  // Debug logging for team leads data
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[About] Team leads data status:', {
+        isLoading: teamLeadsLoading,
+        hasError: !!teamLeadsError,
+        totalTeamLeads: firestoreTeamLeads.length,
+        validTeamLeads: teamLeads.length
+      });
+      
+      if (teamLeads.length > 0) {
+        console.log('[About] Valid team leads loaded:', teamLeads.map(teamLead => ({
+          id: teamLead.id,
+          name: teamLead.name,
+          role: teamLead.role,
+          imageUrl: teamLead.imageUrl
+        })));
+      }
+    }
+  }, [firestoreTeamLeads, teamLeads, teamLeadsLoading, teamLeadsError]);
 
   // Our Values data with Lucide icons
   const ourValues = [
@@ -350,22 +306,48 @@ const About = ({ section }) => {
       <section id="leadership" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Our Leadership Team</h2>
+            <h2 className="text-2xl md:text-4xl font-bold text-gray-900">Church Leadership</h2>
             <p className="text-xl text-gray-700 mt-2">Meet the people who help guide and serve our church</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {leadershipTeam.map((leader) => (
-              <div key={leader.id} className="h-96 animate-fade-in">
-                <FlipCard
-                  name={leader.name}
-                  role={leader.role}
-                  bio={leader.bio}
-                  imageUrl={leader.imageUrl}
-                />
+          {pastorsLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 mx-auto mb-4"></div>
+              <p className="text-gray-700 text-lg">Loading leadership team...</p>
+            </div>
+          ) : pastorsError ? (
+            <div className="text-center py-12">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 max-w-md mx-auto">
+                <p className="text-yellow-700 mb-3">Unable to load leadership team</p>
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="text-yellow-600 hover:text-yellow-700 font-medium text-sm"
+                >
+                  Try again
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : leadershipTeam.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {leadershipTeam.map((leader) => (
+                <div key={leader.id} className="h-96 animate-fade-in">
+                  <FlipCard
+                    name={leader.name}
+                    role={leader.role}
+                    bio={leader.bio}
+                    imageUrl={leader.imageUrl}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-gray-50 rounded-xl p-8 max-w-md mx-auto">
+                <p className="text-gray-700 text-lg">No leadership team members found.</p>
+                <p className="text-gray-500 text-sm mt-2">Please check back later or contact us for more information.</p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -378,25 +360,51 @@ const About = ({ section }) => {
             <p className="text-xl text-gray-700 mt-2">Serving with excellence across our departments</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamLeads.map((teamLead, index) => (
-              <div 
-                key={teamLead.id} 
-                className="h-96 animate-fade-in-up"
-                style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  animationFillMode: 'both'
-                }}
-              >
-                <FlipCard
-                  name={teamLead.name}
-                  role={teamLead.role}
-                  bio={teamLead.bio}
-                  imageUrl={teamLead.imageUrl}
-                />
+          {teamLeadsLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 mx-auto mb-4"></div>
+              <p className="text-gray-700 text-lg">Loading team leads...</p>
+            </div>
+          ) : teamLeadsError ? (
+            <div className="text-center py-12">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 max-w-md mx-auto">
+                <p className="text-yellow-700 mb-3">Unable to load team leads</p>
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="text-yellow-600 hover:text-yellow-700 font-medium text-sm"
+                >
+                  Try again
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : teamLeads.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {teamLeads.map((teamLead, index) => (
+                <div 
+                  key={teamLead.id} 
+                  className="h-96 animate-fade-in-up"
+                  style={{ 
+                    animationDelay: `${index * 0.1}s`,
+                    animationFillMode: 'both'
+                  }}
+                >
+                  <FlipCard
+                    name={teamLead.name}
+                    role={teamLead.role}
+                    bio={teamLead.bio}
+                    imageUrl={teamLead.imageUrl}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-gray-50 rounded-xl p-8 max-w-md mx-auto">
+                <p className="text-gray-700 text-lg">No team leads found.</p>
+                <p className="text-gray-500 text-sm mt-2">Please check back later or contact us for more information.</p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

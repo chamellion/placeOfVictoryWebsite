@@ -11,31 +11,29 @@ const Navbar = () => {
   const dropdownRefs = useRef({});
   const location = useLocation();
 
-  // Updated navigation structure with grouped dropdowns for better responsiveness
+  // Simplified navigation structure with 4 core items
   const navItems = [
     { title: 'Home', path: '/' },
-    { 
-      title: 'Church', 
+    {
+      title: 'About',
       path: '/about',
       dropdown: [
-        { title: 'About Us', path: '/about' },
-        { title: 'Our History', path: '/about/history' },
+        { title: 'Who We Are', path: '/about' },
         { title: 'Leadership', path: '/about/leadership' },
-        { title: 'Our Beliefs', path: '/about/beliefs' },
-        { title: 'Service Times', path: '/about/services' },
-      ]
+        { title: 'Beliefs', path: '/about/beliefs' },
+      ],
     },
-    { 
-      title: 'Worship & Events', 
-      path: '/events',
+    {
+      title: 'Ministry',
+      path: '/ministry',
       dropdown: [
-        { title: 'Upcoming Events', path: '/events' },
-        { title: 'Sermons', path: '/sermons' },
-        { title: 'Community Services', path: '/community-services' },
+        { title: 'Service Times', path: '/about/services' },
+        { title: 'Events', path: '/events' },
+        { title: 'Community Outreach', path: '/community-services' },
+        { title: 'Testimonies', path: '/testimonies' },
         { title: 'Prayer Requests', path: '/prayer' },
-      ]
+      ],
     },
-    { title: 'Testimonies', path: '/testimonies' },
     { title: 'Contact', path: '/contact' },
   ];
 
@@ -116,8 +114,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3" aria-label="Home">
+          {/* Logo - Left Aligned */}
+          <Link to="/" className="flex items-center space-x-3 flex-shrink-0" aria-label="Home">
             <div className="flex items-center space-x-2">
               <img 
                 src="/rccg_logo.png" 
@@ -136,9 +134,9 @@ const Navbar = () => {
             </span>
           </Link>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6" role="navigation" aria-label="Main navigation">
-            <ul className="flex items-center space-x-4 xl:space-x-6">
+          {/* Desktop Navigation - Right Aligned */}
+          <nav className="hidden lg:flex items-center space-x-6" role="navigation" aria-label="Main navigation">
+            <ul className="flex items-center space-x-6">
               {navItems.map((item, index) => (
                 <li 
                   key={index} 
@@ -151,7 +149,7 @@ const Navbar = () => {
                     <>
                       <button
                         onClick={() => toggleDropdown(index)}
-                        className={`flex items-center px-2 xl:px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-sm xl:text-base
+                        className={`flex items-center px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-base
                           ${isActive(item.path) ? 'text-primary-600' : ''}
                           ${activeDropdown === index ? 'text-primary-600 bg-gray-50' : ''}`}
                         aria-expanded={activeDropdown === index}
@@ -199,7 +197,7 @@ const Navbar = () => {
                   ) : (
                     <Link 
                       to={item.path} 
-                      className={`px-2 xl:px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-sm xl:text-base
+                      className={`px-3 py-2 text-gray-700 hover:text-primary-600 font-medium rounded-lg transition-colors text-base
                         ${isActive(item.path) ? 'text-primary-600' : ''}`}
                       aria-current={isActive(item.path) ? 'page' : undefined}
                     >
@@ -208,21 +206,19 @@ const Navbar = () => {
                   )}
                 </li>
               ))}
-              {/* Donate Button */}
-              <li>
+              
+              {/* CTA Buttons */}
+              <li className="flex items-center space-x-3">
                 <Link
                   to="/donate"
-                  className="px-3 xl:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-sm xl:text-base"
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-base"
                   aria-current={isActive('/donate') ? 'page' : undefined}
                 >
                   Donate
                 </Link>
-              </li>
-              {/* Volunteer Button */}
-              <li>
                 <Link
                   to="/volunteer"
-                  className="px-3 xl:px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-sm xl:text-base"
+                  className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors transform hover:scale-105 active:scale-95 text-base"
                   aria-current={isActive('/volunteer') ? 'page' : undefined}
                 >
                   Volunteer
@@ -341,22 +337,20 @@ const Navbar = () => {
                     )}
                   </li>
                 ))}
-                {/* Mobile Donate Button */}
-                <li>
+                
+                {/* Mobile CTA Buttons */}
+                <li className="space-y-3 mt-6">
                   <Link
                     to="/donate"
-                    className="block w-full px-4 py-3 mt-4 text-center bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+                    className="block w-full px-4 py-3 text-center bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                     aria-current={isActive('/donate') ? 'page' : undefined}
                   >
                     Donate
                   </Link>
-                </li>
-                {/* Mobile Volunteer Button */}
-                <li>
                   <Link
                     to="/volunteer"
-                    className="block w-full px-4 py-3 mt-4 text-center bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                    className="block w-full px-4 py-3 text-center bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                     aria-current={isActive('/volunteer') ? 'page' : undefined}
                   >
