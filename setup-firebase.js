@@ -10,15 +10,13 @@ const envTemplate = `# Firebase Configuration
 # Replace these placeholder values with your actual Firebase project configuration
 # You can find these values in your Firebase Console > Project Settings > General > Your apps
 
-# (No Firebase credentials here. Please copy your actual config from the Firebase Console.)
-# Example placeholders:
-REACT_APP_FIREBASE_API_KEY=your_api_key_here
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key_here
 REACT_APP_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
 REACT_APP_FIREBASE_PROJECT_ID=your_project_id
 REACT_APP_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 REACT_APP_FIREBASE_APP_ID=your_app_id
-REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
+REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id_here
 
 # Instructions:
 # 1. Go to Firebase Console: https://console.firebase.google.com/
