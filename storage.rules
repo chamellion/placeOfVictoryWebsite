@@ -7,6 +7,12 @@ service firebase.storage {
       allow write: if request.auth != null;
     }
     
+    // Allow public read access to testimonies photos
+    match /testimonies/{allPaths=**} {
+      allow read: if true;
+      allow write: if true; // Allow public uploads for testimonies
+    }
+    
     // Default rule - deny all other access
     match /{allPaths=**} {
       allow read, write: if false;

@@ -48,6 +48,54 @@ service cloud.firestore {
       // Validate document structure on write
       allow create, update: if request.auth != null && validateTeamLead(resource.data);
     }
+    
+    // Recurring events collection
+    match /recurringEvents/{document} {
+      // Allow public read access to all recurring events
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateRecurringEvent(resource.data);
+    }
+    
+    // Skipped recurring events collection
+    match /skippedRecurringEvents/{document} {
+      // Allow public read access to all skipped recurring events
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (for dashboard)
+      allow write: if request.auth != null;
+      
+      // Validate document structure on write
+      allow create, update: if request.auth != null && validateSkippedRecurringEvent(resource.data);
+    }
+    
+    // Newsletter signups collection
+    match /newsletterSignups/{document} {
+      // Allow public read access to newsletter signups (for admin dashboard)
+      allow read: if true;
+      
+      // Allow public write access for newsletter subscriptions (no auth required)
+      allow create: if validateNewsletterSignup(request.resource.data);
+      
+      // Allow update/delete only to authenticated users (for admin management)
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Testimonies collection
+    match /testimonies/{document} {
+      // Allow public read access to all testimonies
+      allow read: if true;
+      
+      // Allow public write access for testimony submissions (no auth required)
+      allow create: if validateTestimony(request.resource.data);
+      
+      // Allow update/delete only to authenticated users (for admin management)
+      allow update, delete: if request.auth != null;
+    }
   }
   
   // Validation function for carousel slides
@@ -162,5 +210,92 @@ service cloud.firestore {
       
       // Validate URL format for image (basic check)
       data.image.matches('^https?://.*');
+  }
+  
+  // Validation function for recurring events
+  function validateRecurringEvent(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['title', 'description', 'startTime', 'endTime', 'location', 'dayOfWeek', 'isActive']) &&
+      data.title is string &&
+      data.title.size() > 0 &&
+      data.description is string &&
+      data.description.size() > 0 &&
+      data.startTime is string &&
+      data.startTime.size() > 0 &&
+      data.endTime is string &&
+      data.endTime.size() > 0 &&
+      data.location is string &&
+      data.location.size() > 0 &&
+      data.dayOfWeek is number &&
+      data.dayOfWeek >= 0 &&
+      data.dayOfWeek <= 6 &&
+      data.isActive is bool &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      (data.updatedAt == null || data.updatedAt is timestamp) &&
+      
+      // Validate time format (HH:mm)
+      data.startTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$') &&
+      data.endTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$');
+  }
+  
+  // Validation function for skipped recurring events
+  function validateSkippedRecurringEvent(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['recurringEventId', 'skipDate', 'reason']) &&
+      data.recurringEventId is string &&
+      data.recurringEventId.size() > 0 &&
+      data.skipDate is string &&
+      data.skipDate.size() > 0 &&
+      data.reason is string &&
+      data.reason.size() > 0 &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      
+      // Validate date format (YYYY-MM-DD)
+      data.skipDate.matches('^\\d{4}-\\d{2}-\\d{2}$');
+  }
+  
+  // Validation function for newsletter signups
+  function validateNewsletterSignup(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['email']) &&
+      data.email is string &&
+      data.email.size() > 0 &&
+      
+      // Validate email format (basic check)
+      data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$') &&
+      
+      // Email should be lowercase for consistency
+      data.email == data.email.lower() &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp);
+  }
+  
+  // Validation function for testimonies
+  function validateTestimony(data) {
+    return 
+      // Required fields must exist and be of correct type
+      data.keys().hasAll(['name', 'testimony', 'isAnonymous']) &&
+      data.name is string &&
+      data.name.size() > 0 &&
+      data.testimony is string &&
+      data.testimony.size() > 0 &&
+      data.isAnonymous is bool &&
+      
+      // Optional photo field must be string or null if present
+      (data.photo == null || (data.photo is string && data.photo.size() > 0)) &&
+      
+      // Timestamps should be Firestore timestamps if present
+      (data.createdAt == null || data.createdAt is timestamp) &&
+      
+      // If anonymous, name should be "Anonymous"
+      (data.isAnonymous == false || data.name == "Anonymous");
   }
 } 

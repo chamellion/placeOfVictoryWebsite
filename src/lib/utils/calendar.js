@@ -1,9 +1,75 @@
 import { createEvent } from 'ics';
 import { startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
+import { formatEventDateTime } from '../../types/Event';
 
 /**
- * Generates recurring events for the next 6 months
- * @returns {Array} Array of recurring event objects
+ * Generates recurring events from Firestore data for the next 6 months
+ * @param {Array} recurringEvents - Array of recurring event objects from Firestore
+ * @param {Array} skippedEvents - Array of skipped recurring event objects from Firestore
+ * @returns {Array} Array of generated recurring event instances
+ */
+export const generateRecurringEventsFromFirestore = (recurringEvents, skippedEvents = []) => {
+  const generatedEvents = [];
+  const today = new Date();
+  const sixMonthsFromNow = new Date(today.getFullYear(), today.getMonth() + 6, today.getDate());
+  
+  // Create a map of skipped dates for quick lookup
+  const skippedDatesMap = new Map();
+  skippedEvents.forEach(skippedEvent => {
+    if (!skippedDatesMap.has(skippedEvent.recurringEventId)) {
+      skippedDatesMap.set(skippedEvent.recurringEventId, new Set());
+    }
+    skippedDatesMap.get(skippedEvent.recurringEventId).add(skippedEvent.skipDate);
+  });
+  
+  // Generate events for each active recurring event
+  recurringEvents.forEach(recurringEvent => {
+    if (!recurringEvent.isActive) return;
+    
+    let currentDate = new Date(today);
+    
+    while (currentDate <= sixMonthsFromNow) {
+      const dayOfWeek = currentDate.getDay();
+      
+      // Check if this date matches the recurring event's day of week
+      if (dayOfWeek === recurringEvent.dayOfWeek) {
+        const dateString = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+        
+        // Check if this date is skipped
+        const skippedDates = skippedDatesMap.get(recurringEvent.id);
+        const isSkipped = skippedDates && skippedDates.has(dateString);
+        
+        if (!isSkipped) {
+          // Generate the event instance
+          const eventInstance = {
+            id: `${recurringEvent.id}-${dateString}`,
+            title: recurringEvent.title,
+            description: recurringEvent.description,
+            date: dateString,
+            startTime: recurringEvent.startTime,
+            endTime: recurringEvent.endTime,
+            location: recurringEvent.location,
+            isRecurring: true,
+            recurringEventId: recurringEvent.id,
+            originalDate: new Date(currentDate),
+            formattedDateTime: formatEventDateTime(dateString, recurringEvent.startTime, recurringEvent.endTime)
+          };
+          
+          generatedEvents.push(eventInstance);
+        }
+      }
+      
+      // Move to next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  });
+  
+  return generatedEvents;
+};
+
+/**
+ * Legacy function for backward compatibility
+ * @returns {Array} Array of hardcoded recurring event objects
  */
 export const generateRecurringEvents = () => {
   const recurringEvents = [];

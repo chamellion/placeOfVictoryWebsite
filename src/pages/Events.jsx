@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Calendar, MapPin, ChevronRight, ChevronLeft } from 'lucide-react';
 import useSWR from 'swr';
-import { getPublicEvents } from '../lib/firebaseClient';
+import { getPublicEvents, getPublicRecurringEvents, getPublicSkippedRecurringEvents } from '../lib/firebaseClient';
 import { isValidEvent, formatEventDateTime, parseEventDate } from '../types/Event';
-import { generateRecurringEvents, mergeAndSortEvents } from '../lib/utils/calendar';
+import { generateRecurringEventsFromFirestore, mergeAndSortEvents } from '../lib/utils/calendar';
 import EventExportButtons from '../components/EventExportButtons';
 import RecurringEventBadge from '../components/RecurringEventBadge';
+import NewsletterForm from '../components/NewsletterForm';
 
 const Events = () => {
   // Current date for the calendar
@@ -13,7 +14,7 @@ const Events = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   
   // Fetch events from Firestore with SWR caching
-  const { data: firestoreEvents = [], isLoading, error } = useSWR(
+  const { data: firestoreEvents = [], isLoading: eventsLoading, error: eventsError } = useSWR(
     'events',
     getPublicEvents,
     { 
@@ -22,9 +23,71 @@ const Events = () => {
       dedupingInterval: 60000, // Cache for 1 minute
     }
   );
+
+  // Fetch recurring events from Firestore
+  const { data: firestoreRecurringEvents = [], isLoading: recurringLoading, error: recurringError } = useSWR(
+    'recurringEvents',
+    getPublicRecurringEvents,
+    { 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
+    }
+  );
+
+  // Debug SWR recurring events
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Events] SWR Recurring Events Status:', {
+        data: firestoreRecurringEvents,
+        isLoading: recurringLoading,
+        error: recurringError,
+        dataLength: firestoreRecurringEvents.length
+      });
+      
+      // Log each recurring event in detail
+      if (firestoreRecurringEvents.length > 0) {
+        console.log('[Events] Recurring events details:', firestoreRecurringEvents.map(event => ({
+          id: event.id,
+          title: event.title,
+          dayOfWeek: event.dayOfWeek,
+          isActive: event.isActive,
+          startTime: event.startTime,
+          endTime: event.endTime,
+          location: event.location
+        })));
+      }
+    }
+  }, [firestoreRecurringEvents, recurringLoading, recurringError]);
+
+  // Fetch skipped recurring events from Firestore
+  const { data: skippedRecurringEvents = [], isLoading: skippedLoading, error: skippedError } = useSWR(
+    'skippedRecurringEvents',
+    getPublicSkippedRecurringEvents,
+    { 
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 60000, // Cache for 1 minute
+    }
+  );
+
+  // Debug SWR skipped events
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Events] SWR Skipped Events Status:', {
+        data: skippedRecurringEvents,
+        isLoading: skippedLoading,
+        error: skippedError,
+        dataLength: skippedRecurringEvents.length
+      });
+    }
+  }, [skippedRecurringEvents, skippedLoading, skippedError]);
   
-  // Generate recurring events
-  const recurringEvents = useMemo(() => generateRecurringEvents(), []);
+  // Generate recurring events from Firestore data
+  const recurringEvents = useMemo(() => 
+    generateRecurringEventsFromFirestore(firestoreRecurringEvents, skippedRecurringEvents), 
+    [firestoreRecurringEvents, skippedRecurringEvents]
+  );
   
   // Filter and validate events from Firestore
   const processedFirestoreEvents = firestoreEvents
@@ -90,15 +153,21 @@ const Events = () => {
     return events;
   }, [filteredEvents, selectedDate]);
   
+  // Combined loading and error states
+  const isLoading = eventsLoading || recurringLoading || skippedLoading;
+  const hasError = eventsError || recurringError || skippedError;
+
   // Debug logging for events data
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
       console.log('[Events] Data status:', {
         isLoading,
-        hasError: !!error,
+        hasError: !!hasError,
         totalEvents: firestoreEvents.length,
         validEvents: processedFirestoreEvents.length,
-        recurringEvents: recurringEvents.length,
+        firestoreRecurringEvents: firestoreRecurringEvents.length,
+        skippedEvents: skippedRecurringEvents.length,
+        generatedRecurringEvents: recurringEvents.length,
         allEvents: allEvents.length,
         filteredEvents: filteredEvents.length
       });
@@ -114,7 +183,7 @@ const Events = () => {
         })));
       }
     }
-  }, [firestoreEvents, processedFirestoreEvents, recurringEvents, allEvents, filteredEvents, isLoading, error]);
+  }, [firestoreEvents, processedFirestoreEvents, firestoreRecurringEvents, skippedRecurringEvents, recurringEvents, allEvents, filteredEvents, isLoading, hasError]);
   
 
   
@@ -133,37 +202,39 @@ const Events = () => {
   
   // Get recurring weekly activities for default view
   const recurringWeeklyActivities = useMemo(() => {
-    const activities = [
-      {
-        id: 'sunday-service',
-        title: 'Sunday Service',
-        description: 'Join us for our weekly Sunday worship service. Experience powerful worship, inspiring messages, and fellowship with our church family.',
-        day: 'Sunday',
-        time: '9:30 AM - 11:00 AM & 12:00 PM - 1:30 PM',
-        location: 'Main Sanctuary',
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+    // Debug logging for recurring events
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Events] Recurring events debug:', {
+        firestoreRecurringEventsLength: firestoreRecurringEvents.length,
+        firestoreRecurringEvents: firestoreRecurringEvents,
+        filteredActiveEvents: firestoreRecurringEvents.filter(event => event.isActive)
+      });
+    }
+    
+    const result = firestoreRecurringEvents
+      .filter(event => event.isActive)
+      .map(event => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        day: dayNames[event.dayOfWeek],
+        time: `${event.startTime} - ${event.endTime}`,
+        location: event.location,
         isRecurring: true
-      },
-      {
-        id: 'wednesday-bible-study',
-        title: 'Wednesday Bible Study',
-        description: 'Join us for an in-depth study of God\'s Word. This is a time for learning, discussion, and spiritual growth.',
-        day: 'Wednesday',
-        time: '6:30 PM - 8:00 PM',
-        location: 'Fellowship Hall',
-        isRecurring: true
-      },
-      {
-        id: 'friday-prayer-meeting',
-        title: 'Friday Prayer Meeting',
-        description: 'Join us for a powerful time of prayer and intercession. Come together to lift up our church, community, and world in prayer.',
-        day: 'Friday',
-        time: '6:30 PM - 8:00 PM',
-        location: 'Prayer Room',
-        isRecurring: true
-      }
-    ];
-    return activities;
-  }, []);
+      }))
+      .sort((a, b) => {
+        const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
+      });
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Events] Recurring weekly activities result:', result);
+    }
+    
+    return result;
+  }, [firestoreRecurringEvents]);
 
   // Get upcoming events (events after today) - used when no date is selected
   const today = useMemo(() => new Date(), []);
@@ -401,10 +472,13 @@ const Events = () => {
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600 mx-auto mb-4"></div>
                     <p className="text-gray-700">Loading events...</p>
                   </div>
-                ) : error ? (
+                ) : hasError ? (
                   <div className="text-center py-8">
                     <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                       <p className="text-yellow-700 mb-2">Unable to load events</p>
+                      <p className="text-yellow-600 text-sm mb-3">
+                        This might be because we're setting up our new event system. Please try again in a moment.
+                      </p>
                       <button 
                         onClick={() => window.location.reload()} 
                         className="text-yellow-600 hover:text-yellow-700 font-medium text-sm"
@@ -461,29 +535,41 @@ const Events = () => {
                     <div className="text-center mb-6">
                       <p className="text-gray-600 text-sm">Our regular weekly activities</p>
                     </div>
-                    {recurringWeeklyActivities.map((activity) => (
-                      <div key={activity.id} className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900 mb-1">{activity.title}</h3>
-                            <div className="flex items-center text-primary-700 text-sm font-medium">
-                              <Calendar className="h-4 w-4 mr-1" />
-                              <span>{activity.day}</span>
-                              <span className="mx-2">•</span>
-                              <span>{activity.time}</span>
+                    {recurringWeeklyActivities.length > 0 ? (
+                      recurringWeeklyActivities.map((activity) => (
+                        <div key={activity.id} className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
+                          <div className="flex items-start justify-between mb-3">
+                            <div>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-1">{activity.title}</h3>
+                              <div className="flex items-center text-primary-700 text-sm font-medium">
+                                <Calendar className="h-4 w-4 mr-1" />
+                                <span>{activity.day}</span>
+                                <span className="mx-2">•</span>
+                                <span>{activity.time}</span>
+                              </div>
                             </div>
+                            <RecurringEventBadge />
                           </div>
-                          <RecurringEventBadge />
+                          <div className="flex items-center text-gray-700 mb-3">
+                            <MapPin className="h-4 w-4 mr-2 text-primary-600" />
+                            <span className="text-sm">{activity.location}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm leading-relaxed">
+                            {activity.description}
+                          </p>
                         </div>
-                        <div className="flex items-center text-gray-700 mb-3">
-                          <MapPin className="h-4 w-4 mr-2 text-primary-600" />
-                          <span className="text-sm">{activity.location}</span>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                          <Calendar className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+                          <p className="text-blue-700 text-lg font-medium mb-2">Setting Up Weekly Activities</p>
+                          <p className="text-blue-600 text-sm">
+                            We're currently setting up our weekly recurring events. Check back soon for our regular schedule!
+                          </p>
                         </div>
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          {activity.description}
-                        </p>
                       </div>
-                    ))}
+                    )}
                     
                     {/* Show upcoming special events */}
                     <div className="mt-8">
@@ -540,16 +626,7 @@ const Events = () => {
           <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
             Sign up for our newsletter to stay informed about upcoming events and opportunities to get involved.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center max-w-lg mx-auto gap-4">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="py-3 px-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 flex-grow"
-            />
-            <button className="py-3 px-6 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-              Subscribe
-            </button>
-          </div>
+          <NewsletterForm />
         </div>
       </section>
     </div>
