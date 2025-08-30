@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { addContactMessage } from '../lib/firebaseClient';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Contact = () => {
     phone: '',
     subject: '',
     message: '',
+    preferredContactMethod: 'email',
   });
   
   const [formStatus, setFormStatus] = useState({
@@ -15,6 +17,8 @@ const Contact = () => {
     error: false,
     message: '',
   });
+
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +28,7 @@ const Contact = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -36,33 +40,88 @@ const Contact = () => {
       });
       return;
     }
-    
-    // In a real application, you would send the form data to your server here
-    // This is just a simulation of form submission
-    
-    // Reset form and show success message
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    });
-    
-    setFormStatus({
-      submitted: true,
-      error: false,
-      message: 'Thank you for your message! We will get back to you soon.',
-    });
-    
-    // Reset form status after 5 seconds
-    setTimeout(() => {
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
       setFormStatus({
         submitted: false,
-        error: false,
-        message: '',
+        error: true,
+        message: 'Please enter a valid email address.',
       });
-    }, 5000);
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      // Prepare data for Firestore
+      const contactData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        preferredContactMethod: formData.preferredContactMethod,
+        userAgent: navigator.userAgent
+      };
+
+      // Add to Firestore using the helper function
+      const result = await addContactMessage(contactData);
+      
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      
+      // Reset form and show success message
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+        preferredContactMethod: 'email',
+      });
+      
+      setFormStatus({
+        submitted: true,
+        error: false,
+        message: 'Thank you for your message! We will get back to you soon.',
+      });
+      
+      // Reset form status after 5 seconds
+      setTimeout(() => {
+        setFormStatus({
+          submitted: false,
+          error: false,
+          message: '',
+        });
+      }, 5000);
+      
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      
+      let errorMessage = 'An unexpected error occurred. Please try again later.';
+      
+      // Use the error message from the result if available
+      if (error.message && error.message !== 'An unexpected error occurred. Please try again later.') {
+        errorMessage = error.message;
+      } else if (error.code === 'permission-denied') {
+        errorMessage = 'Permission denied. Please try again later.';
+      } else if (error.code === 'unavailable') {
+        errorMessage = 'Service unavailable. Please check your connection and try again.';
+      } else if (error.code === 'invalid-argument') {
+        errorMessage = 'Please check your input and try again.';
+      }
+      
+      setFormStatus({
+        submitted: false,
+        error: true,
+        message: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   return (
@@ -107,7 +166,7 @@ const Contact = () => {
                   <Phone className="h-6 w-6 text-primary-600 mr-4 mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-lg text-gray-700">(123) 456-7890</p>
+                    <p className="text-lg text-gray-700">+44 7700 900123</p>
                   </div>
                 </div>
                 
@@ -188,6 +247,7 @@ const Contact = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                   
@@ -203,6 +263,7 @@ const Contact = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                   
@@ -216,8 +277,27 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      placeholder="+44 7700 900123"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
+                      disabled={isLoading}
                     />
+                  </div>
+
+                  <div className="mb-6">
+                    <label htmlFor="preferredContactMethod" className="block text-gray-700 font-medium mb-2 text-lg">
+                      Preferred Contact Method
+                    </label>
+                    <select
+                      id="preferredContactMethod"
+                      name="preferredContactMethod"
+                      value={formData.preferredContactMethod}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
+                      disabled={isLoading}
+                    >
+                      <option value="email">Email</option>
+                      <option value="phone">Phone</option>
+                    </select>
                   </div>
                   
                   <div className="mb-6">
@@ -231,6 +311,7 @@ const Contact = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
+                      disabled={isLoading}
                     />
                   </div>
                   
@@ -246,14 +327,20 @@ const Contact = () => {
                       rows="5"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg"
                       required
+                      disabled={isLoading}
                     ></textarea>
                   </div>
                   
                   <button 
                     type="submit"
-                    className="w-full py-3 px-6 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors text-lg"
+                    disabled={isLoading}
+                    className={`w-full py-3 px-6 font-medium rounded-lg transition-colors text-lg ${
+                      isLoading 
+                        ? 'bg-gray-400 cursor-not-allowed' 
+                        : 'bg-primary-600 hover:bg-primary-700'
+                    } text-white`}
                   >
-                    {formStatus.submitted ? 'Message Sent!' : 'Send Message'}
+                    {isLoading ? 'Sending...' : (formStatus.submitted ? 'Message Sent!' : 'Send Message')}
                   </button>
                 </form>
               </div>

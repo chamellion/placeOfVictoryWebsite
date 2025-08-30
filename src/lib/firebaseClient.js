@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, orderBy, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { isValidCarouselSlide } from '../types/CarouselSlide';
 import { isValidEvent } from '../types/Event';
 import { isValidPastor } from '../types/Pastor';
@@ -58,6 +59,7 @@ if (process.env.NODE_ENV === 'development') {
 // Initialize Firebase only in the browser
 let app;
 let firestore;
+let storage;
 
 if (typeof window !== "undefined") {
   // Only initialize if configuration is valid
@@ -72,9 +74,11 @@ if (typeof window !== "undefined") {
         console.log('[Firebase] Using existing Firebase app');
       }
       firestore = getFirestore(app);
+      storage = getStorage(app);
     } catch (error) {
       console.error('[Firebase] Failed to initialize Firebase:', error);
       firestore = null;
+      storage = null;
     }
   } else {
     console.warn('[Firebase] Skipping initialization due to missing configuration');
@@ -82,7 +86,107 @@ if (typeof window !== "undefined") {
   }
 }
 
-export { firestore };
+export { firestore, storage };
+
+/**
+ * Adds a new testimony to Firestore
+ * @param {Object} testimonyData - The testimony data object
+ * @returns {Promise<{success: boolean, error?: string, docId?: string}>} Result of the operation
+ */
+export const addTestimony = async (testimonyData) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding testimony:', testimonyData);
+    
+    // Ensure name is "Anonymous" if isAnonymous is true
+    const finalName = testimonyData.isAnonymous ? "Anonymous" : testimonyData.name;
+    
+    const testimoniesRef = collection(firestore, 'testimonies');
+    
+    const docRef = await addDoc(testimoniesRef, {
+      name: finalName,
+      testimony: testimonyData.testimony,
+      photo: testimonyData.photo || null,
+      isAnonymous: testimonyData.isAnonymous,
+      createdAt: serverTimestamp()
+    });
+    
+    console.log('[Firebase] Testimony added successfully with ID:', docRef.id);
+    return { success: true, docId: docRef.id };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding testimony:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid data format.');
+      return { success: false, error: 'Please check your input and try again.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+};
+
+/**
+ * Uploads a photo to Firebase Storage
+ * @param {File} file - The photo file to upload
+ * @param {string} folder - The folder path in storage (default: 'testimonies')
+ * @param {Function} onProgress - Progress callback function
+ * @returns {Promise<{success: boolean, error?: string, downloadURL?: string}>} Result of the operation
+ */
+export const uploadPhoto = async (file, folder = 'testimonies', onProgress) => {
+  if (!storage) {
+    console.warn('[Firebase] Storage not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase Storage not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Uploading photo to folder:', folder);
+    
+    // Create a unique filename
+    const timestamp = Date.now();
+    const fileName = `${timestamp}_${file.name}`;
+    const storageRef = ref(storage, `${folder}/${fileName}`);
+    
+    // Upload the file
+    const snapshot = await uploadBytes(storageRef, file);
+    
+    // Get the download URL
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    
+    console.log('[Firebase] Photo uploaded successfully:', downloadURL);
+    return { success: true, downloadURL };
+    
+  } catch (error) {
+    console.error('[Firebase] Error uploading photo:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Storage security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'storage/unauthorized') {
+      console.error('[Firebase] Unauthorized access to storage.');
+      return { success: false, error: 'Unauthorized access. Please try again later.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+};
 
 /**
  * Fetches visible carousel slides from Firestore
@@ -486,5 +590,327 @@ export const getPublicTeamLeads = async () => {
     }
     
     return [];
+  }
+}; 
+
+/**
+ * Fetches active recurring events from Firestore
+ * @returns {Promise<RecurringEvent[]>} Array of active recurring events
+ */
+export const getPublicRecurringEvents = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return [];
+  }
+
+  try {
+    console.log('[Firebase] Fetching recurring events from collection: recurringEvents');
+    
+    const recurringEventsRef = collection(firestore, 'recurringEvents');
+    const q = query(
+      recurringEventsRef,
+      where('isActive', '==', true),
+      orderBy('dayOfWeek', 'asc')
+    );
+
+    const querySnapshot = await getDocs(q);
+    const recurringEvents = [];
+    const invalidRecurringEvents = [];
+
+    console.log(`[Firebase] Found ${querySnapshot.size} total documents in recurringEvents collection`);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const recurringEvent = {
+        id: doc.id,
+        title: data.title || '',
+        description: data.description || '',
+        dayOfWeek: data.dayOfWeek || 0,
+        startTime: data.startTime || '',
+        endTime: data.endTime || '',
+        location: data.location || '',
+        isActive: data.isActive || false,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+      };
+
+      // Debug log for each recurring event
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Firebase] Processing recurring event ${doc.id}:`, {
+          title: recurringEvent.title,
+          dayOfWeek: recurringEvent.dayOfWeek,
+          location: recurringEvent.location,
+          isActive: recurringEvent.isActive
+        });
+      }
+
+      // Validate the recurring event before adding it to the array
+      if (recurringEvent.title && recurringEvent.dayOfWeek >= 0 && recurringEvent.dayOfWeek <= 6 && recurringEvent.isActive) {
+        recurringEvents.push(recurringEvent);
+      } else {
+        invalidRecurringEvents.push({ id: doc.id, data: recurringEvent });
+        console.warn(`[Firebase] Skipping invalid recurring event: ${doc.id}`);
+      }
+    });
+
+    // Comprehensive development logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Firebase] Recurring events summary:`);
+      console.log(`  - Total documents: ${querySnapshot.size}`);
+      console.log(`  - Valid recurring events: ${recurringEvents.length}`);
+      console.log(`  - Invalid recurring events: ${invalidRecurringEvents.length}`);
+      
+      if (recurringEvents.length === 0) {
+        console.warn('[Firebase] No valid recurring events found. Possible issues:');
+        console.warn('  1. Check Firestore rules allow public reads from recurringEvents');
+        console.warn('  2. Verify each recurring event document has valid required fields');
+        console.warn('  3. Ensure isActive is true');
+        console.warn('  4. Check Firebase configuration is correct');
+        console.warn('  5. Check network connectivity to Firebase');
+      }
+      
+      if (invalidRecurringEvents.length > 0) {
+        console.warn('[Firebase] Invalid recurring events details:', invalidRecurringEvents);
+      }
+    }
+
+    return recurringEvents;
+  } catch (error) {
+    console.error('[Firebase] Error fetching recurring events:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection not found. Verify recurringEvents collection exists.');
+    }
+    
+    return [];
+  }
+};
+
+/**
+ * Fetches skipped recurring events from Firestore
+ * @returns {Promise<SkippedRecurringEvent[]>} Array of skipped recurring events
+ */
+export const getPublicSkippedRecurringEvents = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return [];
+  }
+
+  try {
+    console.log('[Firebase] Fetching skipped recurring events from collection: skippedRecurringEvents');
+    
+    const skippedEventsRef = collection(firestore, 'skippedRecurringEvents');
+    const q = query(
+      skippedEventsRef,
+      orderBy('skipDate', 'asc')
+    );
+
+    const querySnapshot = await getDocs(q);
+    const skippedEvents = [];
+    const invalidSkippedEvents = [];
+
+    console.log(`[Firebase] Found ${querySnapshot.size} total documents in skippedRecurringEvents collection`);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const skippedEvent = {
+        id: doc.id,
+        recurringEventId: data.recurringEventId || '',
+        skipDate: data.skipDate || '',
+        reason: data.reason || '',
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+      };
+
+      // Debug log for each skipped event
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Firebase] Processing skipped event ${doc.id}:`, {
+          recurringEventId: skippedEvent.recurringEventId,
+          skipDate: skippedEvent.skipDate,
+          reason: skippedEvent.reason
+        });
+      }
+
+      // Validate the skipped event before adding it to the array
+      if (skippedEvent.recurringEventId && skippedEvent.skipDate) {
+        skippedEvents.push(skippedEvent);
+      } else {
+        invalidSkippedEvents.push({ id: doc.id, data: skippedEvent });
+        console.warn(`[Firebase] Skipping invalid skipped event: ${doc.id}`);
+      }
+    });
+
+    // Comprehensive development logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Firebase] Skipped events summary:`);
+      console.log(`  - Total documents: ${querySnapshot.size}`);
+      console.log(`  - Valid skipped events: ${skippedEvents.length}`);
+      console.log(`  - Invalid skipped events: ${invalidSkippedEvents.length}`);
+      
+      if (invalidSkippedEvents.length > 0) {
+        console.warn('[Firebase] Invalid skipped events details:', invalidSkippedEvents);
+      }
+    }
+
+    return skippedEvents;
+  } catch (error) {
+    console.error('[Firebase] Error fetching skipped recurring events:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection not found. Verify skippedRecurringEvents collection exists.');
+    }
+    
+    return [];
+  }
+}; 
+
+/**
+ * Adds a new newsletter signup to Firestore
+ * @param {string} email - The subscriber's email address
+ * @returns {Promise<{success: boolean, error?: string}>} Result of the operation
+ */
+export const addNewsletterSignup = async (email) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding newsletter signup for email:', email);
+    
+    const newsletterRef = collection(firestore, 'newsletterSignups');
+    
+    const docRef = await addDoc(newsletterRef, {
+      email: email.toLowerCase().trim(),
+      createdAt: serverTimestamp()
+    });
+    
+    console.log('[Firebase] Newsletter signup added successfully with ID:', docRef.id);
+    return { success: true };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding newsletter signup:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid email format.');
+      return { success: false, error: 'Please enter a valid email address.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+};
+
+/**
+ * Adds a new prayer request to Firestore
+ * @param {Object} prayerData - The prayer request data object
+ * @returns {Promise<{success: boolean, error?: string, docId?: string}>} Result of the operation
+ */
+export const addPrayerRequest = async (prayerData) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding prayer request:', prayerData);
+    
+    const prayerRequestsRef = collection(firestore, 'prayerRequests');
+    
+    const docRef = await addDoc(prayerRequestsRef, {
+      name: prayerData.isAnonymous ? null : prayerData.name,
+      email: prayerData.isAnonymous ? null : prayerData.email,
+      request: prayerData.request,
+      isAnonymous: prayerData.isAnonymous,
+      createdAt: serverTimestamp()
+    });
+    
+    console.log('[Firebase] Prayer request added successfully with ID:', docRef.id);
+    return { success: true, docId: docRef.id };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding prayer request:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid data format.');
+      return { success: false, error: 'Please check your input and try again.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+};
+
+/**
+ * Adds a new contact message to Firestore
+ * @param {Object} contactData - The contact message data object
+ * @returns {Promise<{success: boolean, error?: string, docId?: string}>} Result of the operation
+ */
+export const addContactMessage = async (contactData) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding contact message:', contactData);
+    
+    const contactMessagesRef = collection(firestore, 'contactMessages');
+    
+    const docRef = await addDoc(contactMessagesRef, {
+      name: contactData.name.trim(),
+      email: contactData.email.toLowerCase().trim(),
+      phone: contactData.phone?.trim() || null,
+      subject: contactData.subject?.trim() || null,
+      message: contactData.message.trim(),
+      preferredContactMethod: contactData.preferredContactMethod || 'email',
+      userAgent: contactData.userAgent || null,
+      createdAt: serverTimestamp(),
+      status: 'new'
+    });
+    
+    console.log('[Firebase] Contact message added successfully with ID:', docRef.id);
+    return { success: true, docId: docRef.id };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding contact message:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid data format.');
+      return { success: false, error: 'Please check your input and try again.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
   }
 }; 

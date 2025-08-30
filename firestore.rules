@@ -1,166 +1,207 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Carousel collection
-    match /carousel/{document} {
-      // Allow public read access to visible slides
-      allow read: if true;
-      
-      // Allow write access only to authenticated users (for dashboard)
-      allow write: if request.auth != null;
-      
-      // Validate document structure on write
-      allow create, update: if request.auth != null && validateCarouselSlide(resource.data);
-    }
     
-    // Events collection
+    // ========================================
+    // CLIENT-FACING COLLECTIONS
+    // Public read access, authenticated write access
+    // ========================================
+
+    // Events collection - public read, authenticated write
     match /events/{document} {
-      // Allow public read access to all events
       allow read: if true;
-      
-      // Allow write access only to authenticated users (for dashboard)
       allow write: if request.auth != null;
-      
-      // Validate document structure on write
-      allow create, update: if request.auth != null && validateEvent(resource.data);
     }
-    
-    // Pastors collection
+
+    // Recurring Events collection - public read, authenticated write
+    match /recurringEvents/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Skipped Recurring Events collection - public read, authenticated write
+    match /skippedRecurringEvents/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Pastors collection - public read, authenticated write
     match /pastors/{document} {
-      // Allow public read access to active pastors
       allow read: if true;
-      
-      // Allow write access only to authenticated users (for dashboard)
       allow write: if request.auth != null;
-      
-      // Validate document structure on write
-      allow create, update: if request.auth != null && validatePastor(resource.data);
     }
-    
-    // Team leads collection
+
+    // Carousel collection - public read, authenticated write
+    match /carousel/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Team Leads collection - public read, authenticated write
+    // ✅ This allows client app to display team leads,
+    // but still restricts modifications to logged-in admins
     match /teamLeads/{document} {
-      // Allow public read access to active team leads
       allow read: if true;
-      
-      // Allow write access only to authenticated users (for dashboard)
       allow write: if request.auth != null;
+    }
+
+    // ========================================
+    // NEWSLETTER SIGNUP COLLECTION
+    // Special rules: public create, authenticated read
+    // ========================================
+
+    match /newsletterSignups/{document} {
+      allow create: if 
+        request.resource.data.email is string &&
+        request.resource.data.email.size() > 0 &&
+        request.resource.data.email.matches('^[^@]+@[^@]+\\.[^@]+$');
       
-      // Validate document structure on write
-      allow create, update: if request.auth != null && validateTeamLead(resource.data);
+      allow read: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+
+    // ========================================
+    // ADMIN-ONLY COLLECTIONS
+    // Authenticated read/write access only
+    // ========================================
+
+    match /gallery/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Testimonies collection - public create, authenticated read/update/delete
+    match /testimonies/{document} {
+      // Allow anyone to create a testimony
+      allow create: if 
+        // Required fields must exist and be of correct type
+        request.resource.data.keys().hasAll(['testimony', 'isAnonymous']) &&
+        request.resource.data.testimony is string &&
+        request.resource.data.testimony.size() > 0 &&
+        request.resource.data.isAnonymous is bool &&
+        
+        // Optional fields must be string or null if present
+        (request.resource.data.name == null || (request.resource.data.name is string && request.resource.data.name.size() > 0)) &&
+        (request.resource.data.photo == null || (request.resource.data.photo is string && request.resource.data.photo.size() > 0)) &&
+        
+        // If anonymous, name should be null or "Anonymous"
+        (request.resource.data.isAnonymous == false || (request.resource.data.name == null || request.resource.data.name == "Anonymous")) &&
+        
+        // Metadata auto-managed by client
+        request.resource.data.createdAt is timestamp;
+      
+      // Only authenticated users can read testimonies
+      allow read: if request.auth != null;
+      
+      // Only authenticated users can update/delete
+      allow update, delete: if request.auth != null;
+    }
+
+    match /testimonies_exports/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /prayerRequests/{document} {
+      // Public create, authenticated read/update/delete
+      allow create: if 
+        request.resource.data.keys().hasAll(['request', 'isAnonymous']) &&
+        request.resource.data.request is string &&
+        request.resource.data.request.size() > 0 &&
+        request.resource.data.isAnonymous is bool &&
+        (request.resource.data.name == null || request.resource.data.name is string) &&
+        (request.resource.data.email == null || request.resource.data.email is string) &&
+        (request.resource.data.email == null || request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')) &&
+        (request.resource.data.isAnonymous == false || (request.resource.data.name == null && request.resource.data.email == null));
+
+      allow read, update, delete: if request.auth != null;
+    }
+
+    match /prayer_requests_exports/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ========================================
+    // CONTACT MESSAGES COLLECTION
+    // Public create, authenticated read/update/delete, export supported
+    // ========================================
+
+    match /contactMessages/{document} {
+      allow create: if 
+        request.resource.data.keys().hasAll(['name', 'email', 'message']) &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 &&
+        request.resource.data.email is string && request.resource.data.email.size() > 0 &&
+        request.resource.data.message is string && request.resource.data.message.size() > 0 &&
+        request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$') &&
+        // optional fields
+        (request.resource.data.phone == null || (request.resource.data.phone is string && request.resource.data.phone.size() > 0)) &&
+        (request.resource.data.subject == null || (request.resource.data.subject is string && request.resource.data.subject.size() > 0)) &&
+        (request.resource.data.userAgent == null || (request.resource.data.userAgent is string && request.resource.data.userAgent.size() > 0)) &&
+        // preferred contact method check
+        (request.resource.data.preferredContactMethod == null || request.resource.data.preferredContactMethod in ['email', 'phone', 'either']) &&
+        // metadata auto-managed by client
+        (request.resource.data.createdAt is timestamp) &&
+        (request.resource.data.status == 'new');
+
+      allow read, update, delete: if request.auth != null;
+    }
+
+    match /contact_messages_exports/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ========================================
+    // OTHER ADMIN COLLECTIONS
+    // ========================================
+
+    match /settings/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /leaders/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /mission_vision/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /service_times/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /about/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /community_service/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ========================================
+    // ACTIVITY LOG COLLECTION
+    // Immutable audit trail
+    // ========================================
+
+    match /activityLog/{document} {
+      allow read, create: if request.auth != null;
+      allow update, delete: if false;
+    }
+
+    // ========================================
+    // USERS COLLECTION
+    // Users can only manage their own profile
+    // ========================================
+
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ========================================
+    // DEFAULT RULE
+    // Deny all other access
+    // ========================================
+
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
-  
-  // Validation function for carousel slides
-  function validateCarouselSlide(data) {
-    return 
-      // Required fields must exist and be of correct type
-      data.keys().hasAll(['imageUrl', 'headline', 'subheadline', 'isVisible', 'order']) &&
-      data.imageUrl is string &&
-      data.imageUrl.size() > 0 &&
-      data.headline is string &&
-      data.headline.size() > 0 &&
-      data.subheadline is string &&
-      data.subheadline.size() > 0 &&
-      data.isVisible is bool &&
-      data.order is number &&
-      data.order >= 0 &&
-      
-      // Optional fields must be strings if present
-      (data.ctaText == null || (data.ctaText is string)) &&
-      (data.ctaLink == null || (data.ctaLink is string)) &&
-      
-      // Timestamps should be Firestore timestamps if present
-      (data.createdAt == null || data.createdAt is timestamp) &&
-      (data.updatedAt == null || data.updatedAt is timestamp) &&
-      
-      // Validate URL format for imageUrl (basic check)
-      data.imageUrl.matches('^https?://.*') &&
-      
-      // Validate URL format for ctaLink if present (basic check)
-      (data.ctaLink == null || data.ctaLink.matches('^(https?://|/).*'));
-  }
-  
-  // Validation function for events
-  function validateEvent(data) {
-    return 
-      // Required fields must exist and be of correct type
-      data.keys().hasAll(['title', 'description', 'date', 'startTime', 'endTime', 'location']) &&
-      data.title is string &&
-      data.title.size() > 0 &&
-      data.description is string &&
-      data.description.size() > 0 &&
-      data.date is string &&
-      data.date.size() > 0 &&
-      data.startTime is string &&
-      data.startTime.size() > 0 &&
-      data.endTime is string &&
-      data.endTime.size() > 0 &&
-      data.location is string &&
-      data.location.size() > 0 &&
-      
-      // Timestamps should be Firestore timestamps if present
-      (data.createdAt == null || data.createdAt is timestamp) &&
-      (data.updatedAt == null || data.updatedAt is timestamp) &&
-      
-      // Validate date format (YYYY-MM-DD)
-      data.date.matches('^\\d{4}-\\d{2}-\\d{2}$') &&
-      
-      // Validate time format (HH:mm)
-      data.startTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$') &&
-      data.endTime.matches('^([01]?[0-9]|2[0-3]):[0-5][0-9]$');
-  }
-  
-  // Validation function for pastors
-  function validatePastor(data) {
-    return 
-      // Required fields must exist and be of correct type
-      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
-      data.name is string &&
-      data.name.size() > 0 &&
-      data.role is string &&
-      data.role.size() > 0 &&
-      data.image is string &&
-      data.image.size() > 0 &&
-      data.bio is string &&
-      data.bio.size() > 0 &&
-      data.customId is string &&
-      data.customId.size() > 0 &&
-      data.category is string &&
-      data.category == 'pastor' &&
-      data.isActive is bool &&
-      
-      // Timestamps should be Firestore timestamps if present
-      (data.createdAt == null || data.createdAt is timestamp) &&
-      (data.updatedAt == null || data.updatedAt is timestamp) &&
-      
-      // Validate URL format for image (basic check)
-      data.image.matches('^https?://.*');
-  }
-  
-  // Validation function for team leads
-  function validateTeamLead(data) {
-    return 
-      // Required fields must exist and be of correct type
-      data.keys().hasAll(['name', 'role', 'image', 'bio', 'customId', 'category', 'isActive']) &&
-      data.name is string &&
-      data.name.size() > 0 &&
-      data.role is string &&
-      data.role.size() > 0 &&
-      data.image is string &&
-      data.image.size() > 0 &&
-      data.bio is string &&
-      data.bio.size() > 0 &&
-      data.customId is string &&
-      data.customId.size() > 0 &&
-      data.category is string &&
-      data.category == 'teamLead' &&
-      data.isActive is bool &&
-      
-      // Timestamps should be Firestore timestamps if present
-      (data.createdAt == null || data.createdAt is timestamp) &&
-      (data.updatedAt == null || data.updatedAt is timestamp) &&
-      
-      // Validate URL format for image (basic check)
-      data.image.matches('^https?://.*');
-  }
-} 
+}
