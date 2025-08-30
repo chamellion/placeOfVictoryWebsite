@@ -815,4 +815,102 @@ export const addNewsletterSignup = async (email) => {
       return { success: false, error: 'An unexpected error occurred. Please try again later.' };
     }
   }
+};
+
+/**
+ * Adds a new prayer request to Firestore
+ * @param {Object} prayerData - The prayer request data object
+ * @returns {Promise<{success: boolean, error?: string, docId?: string}>} Result of the operation
+ */
+export const addPrayerRequest = async (prayerData) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding prayer request:', prayerData);
+    
+    const prayerRequestsRef = collection(firestore, 'prayerRequests');
+    
+    const docRef = await addDoc(prayerRequestsRef, {
+      name: prayerData.isAnonymous ? null : prayerData.name,
+      email: prayerData.isAnonymous ? null : prayerData.email,
+      request: prayerData.request,
+      isAnonymous: prayerData.isAnonymous,
+      createdAt: serverTimestamp()
+    });
+    
+    console.log('[Firebase] Prayer request added successfully with ID:', docRef.id);
+    return { success: true, docId: docRef.id };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding prayer request:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid data format.');
+      return { success: false, error: 'Please check your input and try again.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+};
+
+/**
+ * Adds a new contact message to Firestore
+ * @param {Object} contactData - The contact message data object
+ * @returns {Promise<{success: boolean, error?: string, docId?: string}>} Result of the operation
+ */
+export const addContactMessage = async (contactData) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Adding contact message:', contactData);
+    
+    const contactMessagesRef = collection(firestore, 'contactMessages');
+    
+    const docRef = await addDoc(contactMessagesRef, {
+      name: contactData.name.trim(),
+      email: contactData.email.toLowerCase().trim(),
+      phone: contactData.phone?.trim() || null,
+      subject: contactData.subject?.trim() || null,
+      message: contactData.message.trim(),
+      preferredContactMethod: contactData.preferredContactMethod || 'email',
+      userAgent: contactData.userAgent || null,
+      createdAt: serverTimestamp(),
+      status: 'new'
+    });
+    
+    console.log('[Firebase] Contact message added successfully with ID:', docRef.id);
+    return { success: true, docId: docRef.id };
+    
+  } catch (error) {
+    console.error('[Firebase] Error adding contact message:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'invalid-argument') {
+      console.error('[Firebase] Invalid data format.');
+      return { success: false, error: 'Please check your input and try again.' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
 }; 
