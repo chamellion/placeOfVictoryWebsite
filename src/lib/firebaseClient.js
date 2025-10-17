@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, query, where, orderBy, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, query, where, orderBy, getDocs, addDoc, serverTimestamp, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { isValidCarouselSlide } from '../types/CarouselSlide';
 import { isValidEvent } from '../types/Event';
@@ -912,5 +912,160 @@ export const addContactMessage = async (contactData) => {
       console.error('[Firebase] Unexpected error:', error.message);
       return { success: false, error: 'An unexpected error occurred. Please try again later.' };
     }
+  }
+}; 
+
+/**
+ * Fetches the active theme of the month from Firestore
+ * @returns {Promise<{success: boolean, theme?: Object, error?: string}>} Result with theme data
+ */
+export const getActiveThemeOfTheMonth = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Fetching active theme of the month from collection: theme_of_the_month, document: active');
+    
+    const themeRef = doc(firestore, 'theme_of_the_month', 'active');
+    const themeDoc = await getDoc(themeRef);
+    
+    if (!themeDoc.exists()) {
+      console.warn('[Firebase] Active theme document not found');
+      return { success: false, error: 'Theme not found' };
+    }
+    
+    const data = themeDoc.data();
+    const theme = {
+      id: themeDoc.id,
+      title: data.title || '',
+      subtitle: data.subtitle || '',
+      backgroundMode: data.backgroundMode || 'color',
+      backgroundImageUrl: data.backgroundImageUrl || '',
+      backgroundColor: data.backgroundColor || '#1f2937',
+      textColor: data.textColor || '#ffffff',
+      fontFamily: data.fontFamily || 'sans',
+      createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+      updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+    };
+
+    // Validate required fields
+    if (!theme.title) {
+      console.warn('[Firebase] Theme missing required title field');
+      return { success: false, error: 'Invalid theme data' };
+    }
+
+    // Validate background mode
+    if (theme.backgroundMode === 'image' && !theme.backgroundImageUrl) {
+      console.warn('[Firebase] Theme set to image mode but missing backgroundImageUrl');
+      return { success: false, error: 'Invalid theme data' };
+    }
+
+    console.log('[Firebase] Theme of the month fetched successfully:', {
+      title: theme.title,
+      backgroundMode: theme.backgroundMode,
+      fontFamily: theme.fontFamily
+    });
+
+    return { success: true, theme };
+    
+  } catch (error) {
+    console.error('[Firebase] Error fetching theme of the month:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection or document not found. Verify theme_of_the_month collection exists.');
+      return { success: false, error: 'Theme not found' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+}; 
+
+/**
+ * Subscribes to real-time updates for the active theme of the month
+ * @param {Function} callback - Function called with theme data or error
+ * @returns {Function} Unsubscribe function
+ */
+export const subscribeToActiveThemeOfTheMonth = (callback) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    callback({ success: false, error: 'Firebase not initialized' });
+    return () => {};
+  }
+
+  try {
+    console.log('[Firebase] Subscribing to active theme of the month from collection: theme_of_the_month, document: active');
+    
+    const themeRef = doc(firestore, 'theme_of_the_month', 'active');
+    
+    const unsubscribe = onSnapshot(themeRef, 
+      (doc) => {
+        if (!doc.exists()) {
+          console.warn('[Firebase] Active theme document not found');
+          callback({ success: false, error: 'Theme not found' });
+          return;
+        }
+        
+        const data = doc.data();
+        const theme = {
+          id: doc.id,
+          title: data.title || '',
+          subtitle: data.subtitle || '',
+          imageUrl: data.imageUrl || '',
+          textColor: data.textColor || '#1f2937',
+          fontFamily: data.fontFamily || 'sans',
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+          updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+        };
+
+        // Validate required fields
+        if (!theme.title) {
+          console.warn('[Firebase] Theme missing required title field');
+          callback({ success: false, error: 'Invalid theme data' });
+          return;
+        }
+
+        console.log('[Firebase] Theme of the month updated:', {
+          title: theme.title,
+          fontFamily: theme.fontFamily
+        });
+
+        callback({ success: true, theme });
+      },
+      (error) => {
+        console.error('[Firebase] Error subscribing to theme of the month:', error);
+        
+        // Provide specific error guidance
+        if (error.code === 'permission-denied') {
+          console.error('[Firebase] Permission denied. Check Firestore security rules.');
+          callback({ success: false, error: 'Permission denied. Please try again later.' });
+        } else if (error.code === 'unavailable') {
+          console.error('[Firebase] Firebase service unavailable. Check network connection.');
+          callback({ success: false, error: 'Service unavailable. Please check your connection and try again.' });
+        } else if (error.code === 'not-found') {
+          console.error('[Firebase] Collection or document not found. Verify theme_of_the_month collection exists.');
+          callback({ success: false, error: 'Theme not found' });
+        } else {
+          console.error('[Firebase] Unexpected error:', error.message);
+          callback({ success: false, error: 'An unexpected error occurred. Please try again later.' });
+        }
+      }
+    );
+
+    return unsubscribe;
+    
+  } catch (error) {
+    console.error('[Firebase] Error setting up theme subscription:', error);
+    callback({ success: false, error: 'Failed to subscribe to theme updates' });
+    return () => {};
   }
 }; 

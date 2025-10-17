@@ -20,8 +20,26 @@
 export const isValidCarouselSlide = (slide) => {
   if (!slide) return false;
   
-  const requiredFields = ['id', 'imageUrl', 'headline', 'subheadline', 'isVisible', 'order'];
-  const missingFields = requiredFields.filter(field => !slide[field]);
+  // Check for required fields with proper handling of falsy values
+  const missingFields = [];
+  
+  // String fields that cannot be empty
+  const stringFields = ['id', 'imageUrl', 'headline', 'subheadline'];
+  stringFields.forEach(field => {
+    if (!slide.hasOwnProperty(field) || slide[field] === undefined || slide[field] === null || slide[field] === '') {
+      missingFields.push(field);
+    }
+  });
+  
+  // Boolean field (false is valid)
+  if (!slide.hasOwnProperty('isVisible') || typeof slide.isVisible !== 'boolean') {
+    missingFields.push('isVisible');
+  }
+  
+  // Number field (0 is valid)
+  if (!slide.hasOwnProperty('order') || typeof slide.order !== 'number') {
+    missingFields.push('order');
+  }
   
   if (missingFields.length > 0) {
     console.warn(`[Validation] Carousel slide ${slide.id || 'unknown'} is missing required fields:`, missingFields);

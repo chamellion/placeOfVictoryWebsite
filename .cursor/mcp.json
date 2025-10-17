@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "firebase": {
+      "command": "npx",
+      "args": ["-y",
+       "firebase-tools@latest", "mcp",
+       "--dir", "/Users/peter/WebstormProjects/placeOfVictoryWebsite/firebase.json",
+       "--only", "firestore,storage"
+    ]
+    },
+    "vercel": {
+      "url": "https://mcp.vercel.com"
+    }
+  }
+}

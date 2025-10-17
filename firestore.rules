@@ -177,6 +177,28 @@ service cloud.firestore {
     }
 
     // ========================================
+    // CONFESSION OF THE MONTH COLLECTION
+    // Public read, authenticated write
+    // ========================================
+    
+    // Confession of the Month collection - public read, authenticated write
+    match /confession_of_the_month/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // ========================================
+    // THEME OF THE MONTH COLLECTION
+    // Public read, authenticated write
+    // ========================================
+    
+    // Theme of the Month collection - public read, authenticated write
+    match /theme_of_the_month/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // ========================================
     // ACTIVITY LOG COLLECTION
     // Immutable audit trail
     // ========================================

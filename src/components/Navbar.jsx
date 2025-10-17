@@ -107,13 +107,13 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/90 py-4'
+        isScrolled ? 'bg-white shadow-lg py-2 border-b border-gray-100' : 'bg-white/95 backdrop-blur-md shadow-sm py-4'
       }`}
       role="banner"
       aria-label="Site header"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+      <div className="w-full px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
+        <div className="flex justify-between items-center max-w-[2000px] mx-auto">
           {/* Logo - Left Aligned */}
           <Link to="/" className="flex items-center space-x-3 flex-shrink-0" aria-label="Home">
             <div className="flex items-center space-x-2">
