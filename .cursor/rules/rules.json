@@ -1,0 +1,62 @@
+{
+    "$schema": "https://www.cursor.so/schemas/rules.v1.json",
+    "projectName": "RCCG Place of Victory - Client App",
+    "projectType": "Next.js (React)",
+    "rules": [
+      {
+        "match": ["src/**/*.{js,jsx,ts,tsx}"],
+        "description": "Use functional components with React hooks. Follow clean component structure — logic at top, JSX at bottom. Use Tailwind for styling and maintain semantic HTML."
+      },
+      {
+        "match": ["src/lib/firebaseClient.*"],
+        "description": "Always use Firestore modular SDK. Ensure public reads use security rules defined in firestore.rules. No sensitive keys in client code."
+      },
+      {
+        "match": ["src/components/**/*"],
+        "description": "Follow consistent spacing: sections should have at least `py-20 sm:py-24`. Apply responsive typography (text-3xl md:text-5xl). Use animation utilities only from Tailwind or Framer Motion."
+      },
+      {
+        "match": ["src/pages/**/*"],
+        "description": "Each page should be accessible, SEO-optimized, and mobile responsive. Import shared layout and metadata dynamically."
+      },
+      {
+        "match": ["src/styles/**/*"],
+        "description": "Use Tailwind CSS only. Avoid inline styles unless dynamic. Maintain consistent color palette (#0A1A44 primary, #F3F4F6 background, #FFFFFF text contrast)."
+      },
+      {
+        "match": ["src/components/ThemeOfTheMonth.jsx"],
+        "description": "Ensure full-width responsive image (w-full h-auto), maintain 16:9 aspect ratio, and no cropped content. Title should be above image in centered alignment."
+      },
+      {
+        "match": ["src/components/ConfessionOfTheMonth.jsx"],
+        "description": "Background image should be parallax-style with dark overlay. Text must remain legible with proper contrast ratio (WCAG AA minimum)."
+      },
+      {
+        "match": ["src/app/**/*"],
+        "description": "Avoid hardcoding data. Always fetch from Firestore using safe queries. Use SWR or React Query for caching when necessary."
+      }
+    ],
+    "lint": {
+      "enforceFormatting": true,
+      "preferredFormatter": "prettier",
+      "autoFix": true
+    },
+    "behavior": {
+      "contextWindow": {
+        "maxTokens": 64000,
+        "includeDependencies": true
+      },
+      "defaultTemperature": 0.2,
+      "explainCode": true,
+      "autoRefactor": true
+    },
+    "styleGuide": {
+      "ui": {
+        "fontFamily": "Inter, sans-serif",
+        "primaryColor": "#0A1A44",
+        "accentColor": "#C19B5C",
+        "borderRadius": "1rem",
+        "sectionSpacing": "6rem"
+      }
+    }
+  }
