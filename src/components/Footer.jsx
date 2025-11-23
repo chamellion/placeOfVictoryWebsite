@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, MapPin, Phone, Mail } from 'lucide-react';
+import { subscribeToSiteSettings } from '../lib/firebaseClient';
 
 // Create a custom YouTube icon component
 const YoutubeIcon = ({ size = 24, ...props }) => (
@@ -23,6 +24,35 @@ const YoutubeIcon = ({ size = 24, ...props }) => (
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [settings, setSettings] = useState(null);
+  
+  // Fallback values
+  const fallbackSettings = {
+    contactPhone: '01792 424591',
+    socialLinks: {
+      facebook: 'https://www.facebook.com/share/1AnoUwe1t1/?mibextid=wwXIfr',
+      instagram: 'https://www.instagram.com/placeofvictory?igsh=d3JkdW0xc2Fnczl1&utm_source=qr',
+      twitter: '',
+      youtube: 'https://www.youtube.com/@rccgplaceofvictoryswansea',
+    }
+  };
+  
+  // Subscribe to real-time settings updates
+  useEffect(() => {
+    const unsubscribe = subscribeToSiteSettings((result) => {
+      if (result.success && result.settings) {
+        setSettings(result.settings);
+      } else {
+        console.log('[Footer] Using fallback settings');
+      }
+    });
+    
+    return () => unsubscribe();
+  }, []);
+  
+  // Use settings from Firestore if available, otherwise use fallback
+  const activeSettings = settings || fallbackSettings;
+  const { contactPhone, socialLinks } = activeSettings;
   
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-6">
@@ -42,36 +72,42 @@ const Footer = () => {
               Bringing hope, sharing faith, and serving our community with God's love.
             </p>
             <div className="flex space-x-4">
-              <a 
-                href="https://www.facebook.com/share/1AnoUwe1t1/?mibextid=wwXIfr" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors duration-200 transform hover:scale-110" 
-                aria-label="Follow us on Facebook"
-                title="Follow us on Facebook"
-              >
-                <Facebook size={24} />
-              </a>
-              <a 
-                href="https://www.instagram.com/placeofvictory?igsh=d3JkdW0xc2Fnczl1&utm_source=qr" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors duration-200 transform hover:scale-110" 
-                aria-label="Follow us on Instagram"
-                title="Follow us on Instagram"
-              >
-                <Instagram size={24} />
-              </a>
-              <a 
-                href="https://www.youtube.com/@rccgplaceofvictoryswansea" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-red-500 transition-colors duration-200 transform hover:scale-110" 
-                aria-label="Subscribe to our YouTube channel"
-                title="Subscribe to our YouTube channel"
-              >
-                <YoutubeIcon size={24} />
-              </a>
+              {socialLinks.facebook && (
+                <a 
+                  href={socialLinks.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-500 transition-colors duration-200 transform hover:scale-110" 
+                  aria-label="Follow us on Facebook"
+                  title="Follow us on Facebook"
+                >
+                  <Facebook size={24} />
+                </a>
+              )}
+              {socialLinks.instagram && (
+                <a 
+                  href={socialLinks.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-pink-500 transition-colors duration-200 transform hover:scale-110" 
+                  aria-label="Follow us on Instagram"
+                  title="Follow us on Instagram"
+                >
+                  <Instagram size={24} />
+                </a>
+              )}
+              {socialLinks.youtube && (
+                <a 
+                  href={socialLinks.youtube} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-red-500 transition-colors duration-200 transform hover:scale-110" 
+                  aria-label="Subscribe to our YouTube channel"
+                  title="Subscribe to our YouTube channel"
+                >
+                  <YoutubeIcon size={24} />
+                </a>
+              )}
             </div>
           </div>
           
@@ -127,16 +163,18 @@ const Footer = () => {
                 <MapPin className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0 mt-0.5" />
                 <span className="text-lg text-gray-300">47B Westbury Street<br />Swansea</span>
               </li>
-              <li className="flex items-center">
-                <Phone className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
-                <a 
-                  href="tel:01792424591" 
-                  className="text-lg text-gray-300 hover:text-white transition-colors"
-                  aria-label="Call us at 01792 424591"
-                >
-                  01792 424591
-                </a>
-              </li>
+              {contactPhone && (
+                <li className="flex items-center">
+                  <Phone className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
+                  <a 
+                    href={`tel:${contactPhone.replace(/\s/g, '')}`}
+                    className="text-lg text-gray-300 hover:text-white transition-colors"
+                    aria-label={`Call us at ${contactPhone}`}
+                  >
+                    {contactPhone}
+                  </a>
+                </li>
+              )}
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
                 <span className="text-lg text-gray-300">info@rccgplaceofvictory.org</span>

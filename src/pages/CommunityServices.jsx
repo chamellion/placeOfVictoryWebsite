@@ -20,7 +20,7 @@ import {
   Quote,
   Share2,
   Gift,
-  Smile,
+  Smiley,
   Target,
   TrendingUp,
   Award,
