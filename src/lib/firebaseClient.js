@@ -5,6 +5,7 @@ import { isValidCarouselSlide } from '../types/CarouselSlide';
 import { isValidEvent } from '../types/Event';
 import { isValidPastor } from '../types/Pastor';
 import { isValidTeamLead } from '../types/TeamLead';
+import { isValidSiteSettings } from '../types/SiteSettings';
 
 // Firebase configuration - using REACT_APP_ environment variables
 const firebaseConfig = {
@@ -1066,6 +1067,166 @@ export const subscribeToActiveThemeOfTheMonth = (callback) => {
   } catch (error) {
     console.error('[Firebase] Error setting up theme subscription:', error);
     callback({ success: false, error: 'Failed to subscribe to theme updates' });
+    return () => {};
+  }
+}; 
+
+/**
+ * Fetches site settings from Firestore
+ * @returns {Promise<{success: boolean, settings?: Object, error?: string}>} Result with settings data
+ */
+export const getSiteSettings = async () => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    return { success: false, error: 'Firebase not initialized' };
+  }
+
+  try {
+    console.log('[Firebase] Fetching site settings from collection: settings, document: main');
+    
+    const settingsRef = doc(firestore, 'settings', 'main');
+    const settingsDoc = await getDoc(settingsRef);
+    
+    if (!settingsDoc.exists()) {
+      console.warn('[Firebase] Settings document not found');
+      return { success: false, error: 'Settings not found' };
+    }
+    
+    const data = settingsDoc.data();
+    const settings = {
+      id: settingsDoc.id,
+      contactPhone: data.contactPhone || '',
+      homeHeroText: data.homeHeroText || '',
+      socialLinks: {
+        facebook: data.socialLinks?.facebook || '',
+        instagram: data.socialLinks?.instagram || '',
+        twitter: data.socialLinks?.twitter || '',
+        youtube: data.socialLinks?.youtube || '',
+      },
+      createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+      updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+    };
+
+    // Validate settings
+    if (!isValidSiteSettings(settings)) {
+      console.warn('[Firebase] Settings missing required fields');
+      return { success: false, error: 'Invalid settings data' };
+    }
+
+    console.log('[Firebase] Site settings fetched successfully:', {
+      hasContactPhone: !!settings.contactPhone,
+      hasHomeHeroText: !!settings.homeHeroText,
+      hasFacebook: !!settings.socialLinks.facebook,
+      hasInstagram: !!settings.socialLinks.instagram,
+      hasTwitter: !!settings.socialLinks.twitter,
+      hasYoutube: !!settings.socialLinks.youtube,
+    });
+
+    return { success: true, settings };
+    
+  } catch (error) {
+    console.error('[Firebase] Error fetching site settings:', error);
+    
+    // Provide specific error guidance
+    if (error.code === 'permission-denied') {
+      console.error('[Firebase] Permission denied. Check Firestore security rules.');
+      return { success: false, error: 'Permission denied. Please try again later.' };
+    } else if (error.code === 'unavailable') {
+      console.error('[Firebase] Firebase service unavailable. Check network connection.');
+      return { success: false, error: 'Service unavailable. Please check your connection and try again.' };
+    } else if (error.code === 'not-found') {
+      console.error('[Firebase] Collection or document not found. Verify settings collection exists.');
+      return { success: false, error: 'Settings not found' };
+    } else {
+      console.error('[Firebase] Unexpected error:', error.message);
+      return { success: false, error: 'An unexpected error occurred. Please try again later.' };
+    }
+  }
+}; 
+
+/**
+ * Subscribes to real-time updates for site settings
+ * @param {Function} callback - Function called with settings data or error
+ * @returns {Function} Unsubscribe function
+ */
+export const subscribeToSiteSettings = (callback) => {
+  if (!firestore) {
+    console.warn('[Firebase] Firestore not initialized - running in SSR or missing config');
+    callback({ success: false, error: 'Firebase not initialized' });
+    return () => {};
+  }
+
+  try {
+    console.log('[Firebase] Subscribing to site settings from collection: settings, document: main');
+    
+    const settingsRef = doc(firestore, 'settings', 'main');
+    
+    const unsubscribe = onSnapshot(settingsRef, 
+      (doc) => {
+        if (!doc.exists()) {
+          console.warn('[Firebase] Settings document not found');
+          callback({ success: false, error: 'Settings not found' });
+          return;
+        }
+        
+        const data = doc.data();
+        const settings = {
+          id: doc.id,
+          contactPhone: data.contactPhone || '',
+          homeHeroText: data.homeHeroText || '',
+          socialLinks: {
+            facebook: data.socialLinks?.facebook || '',
+            instagram: data.socialLinks?.instagram || '',
+            twitter: data.socialLinks?.twitter || '',
+            youtube: data.socialLinks?.youtube || '',
+          },
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || '',
+          updatedAt: data.updatedAt?.toDate?.()?.toISOString() || '',
+        };
+
+        // Validate settings
+        if (!isValidSiteSettings(settings)) {
+          console.warn('[Firebase] Settings missing required fields');
+          callback({ success: false, error: 'Invalid settings data' });
+          return;
+        }
+
+        console.log('[Firebase] Site settings updated:', {
+          hasContactPhone: !!settings.contactPhone,
+          hasHomeHeroText: !!settings.homeHeroText,
+          hasFacebook: !!settings.socialLinks.facebook,
+          hasInstagram: !!settings.socialLinks.instagram,
+          hasTwitter: !!settings.socialLinks.twitter,
+          hasYoutube: !!settings.socialLinks.youtube,
+        });
+
+        callback({ success: true, settings });
+      },
+      (error) => {
+        console.error('[Firebase] Error subscribing to site settings:', error);
+        
+        // Provide specific error guidance
+        if (error.code === 'permission-denied') {
+          console.error('[Firebase] Permission denied. Check Firestore security rules.');
+          callback({ success: false, error: 'Permission denied. Please try again later.' });
+        } else if (error.code === 'unavailable') {
+          console.error('[Firebase] Firebase service unavailable. Check network connection.');
+          callback({ success: false, error: 'Service unavailable. Please check your connection and try again.' });
+        } else if (error.code === 'not-found') {
+          console.error('[Firebase] Collection or document not found. Verify settings collection exists.');
+          callback({ success: false, error: 'Settings not found' });
+        } else {
+          console.error('[Firebase] Unexpected error:', error.message);
+          callback({ success: false, error: 'An unexpected error occurred. Please try again later.' });
+        }
+      }
+    );
+
+    return unsubscribe;
+    
+  } catch (error) {
+    console.error('[Firebase] Error setting up settings subscription:', error);
+    callback({ success: false, error: 'Failed to subscribe to settings updates' });
     return () => {};
   }
 }; 

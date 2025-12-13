@@ -2272,3 +2272,541 @@
 [debug] [2025-10-17T13:26:12.358Z] > authorizing via signed-in user (chamellion555@gmail.com)
 [debug] [2025-10-17T13:26:12.395Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2025-10-17T13:26:12.395Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:56.180Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:56.181Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:56.186Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.186Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.187Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.187Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.187Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.189Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.189Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.189Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.189Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.189Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.193Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.193Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.193Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.193Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.193Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.194Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.194Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.194Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.194Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.194Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.194Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:56.194Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:56.195Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.195Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.195Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.195Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.195Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.195Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.195Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.195Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.195Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.195Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.197Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.197Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.197Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.197Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.197Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.197Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.197Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.197Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.197Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.197Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.201Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:56.201Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:56.202Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.202Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.202Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.202Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.202Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.202Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.202Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.202Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.203Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.203Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.204Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.204Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.204Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.204Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.204Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.204Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.204Z] Checked if tokens are valid: false, expires at: 1760711168568
+[debug] [2025-10-24T05:00:56.204Z] > refreshing access token with scopes: []
+[debug] [2025-10-24T05:00:56.204Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-24T05:00:56.204Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.377Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.378Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.398Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.398Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.402Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.403Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.423Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-10-24T05:00:56.423Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.425Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.425Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.430Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-10-24T05:00:56.430Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.431Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.431Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.439Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.440Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.440Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.440Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.448Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.448Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.449Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.449Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.454Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.454Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.454Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.454Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.460Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.460Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.461Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.461Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.467Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.467Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.468Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.468Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.472Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.472Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.473Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.473Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.481Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.481Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.481Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.481Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.491Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-24T05:00:56.491Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:56.491Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-24T05:00:56.492Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-24T05:00:56.500Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-10-24T05:00:56.500Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-10-24T05:00:57.186Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-10-24T05:00:57.187Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-10-24T05:00:57.314Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-24T05:00:57.314Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:57.314Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-24T05:00:57.314Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:57.317Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-24T05:00:57.318Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:57.768Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-10-24T05:00:57.768Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-10-24T05:00:57.772Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-10-24T05:00:57.773Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-10-24T05:00:57.806Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.806Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.807Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.807Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.844Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.844Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.845Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.845Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.966Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.966Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.967Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.967Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.969Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.969Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.969Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.969Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.971Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.971Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:57.971Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:57.971Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.001Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.001Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.001Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.001Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.004Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.004Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.004Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.004Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.007Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.007Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.008Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.008Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.033Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-24T05:00:58.033Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.045Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-24T05:00:58.045Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.048Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-24T05:00:58.048Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.052Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-24T05:00:58.052Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.058Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-24T05:00:58.058Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.059Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-24T05:00:58.059Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-24T05:00:58.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.096Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.096Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.131Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.131Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.131Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.131Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.207Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.207Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.207Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.207Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.209Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.209Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.209Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.209Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.214Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.214Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.214Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.214Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.241Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.241Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.241Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.241Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.247Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.247Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.247Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.247Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.254Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.254Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-10-24T05:00:58.255Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-24T05:00:58.255Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:27.435Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:27.436Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:27.439Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.439Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.439Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.440Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.440Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.441Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.441Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.441Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.441Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.441Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.445Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.445Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.445Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.445Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.445Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.445Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.445Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.445Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.446Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.446Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.446Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:27.446Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:27.446Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.446Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.446Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.446Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.446Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.447Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.447Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.447Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.447Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.447Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.448Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.448Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.448Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.448Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.448Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.448Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.448Z] Checked if tokens are valid: false, expires at: 1761285655492
+[debug] [2025-11-22T23:54:27.448Z] > refreshing access token with scopes: []
+[debug] [2025-11-22T23:54:27.448Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-22T23:54:27.448Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.572Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.572Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.581Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.581Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.591Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.591Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.597Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.597Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.599Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.599Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.605Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.605Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.606Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.606Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.611Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-22T23:54:27.611Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.613Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.614Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.620Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.620Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.622Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.622Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.628Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.628Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.647Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.647Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.653Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-22T23:54:27.653Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:27.654Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-22T23:54:27.654Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-22T23:54:27.660Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-22T23:54:27.660Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:54:28.358Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-22T23:54:28.358Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-22T23:54:28.474Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-22T23:54:28.474Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:28.477Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-22T23:54:28.477Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:28.482Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-22T23:54:28.482Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:28.931Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-22T23:54:28.931Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-22T23:54:29.175Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-22T23:54:29.175Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:29.207Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-22T23:54:29.207Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:29.214Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.214Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.217Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.217Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.238Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-22T23:54:29.238Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-22T23:54:29.273Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.273Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.274Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.274Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.339Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.339Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.340Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.340Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.341Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.341Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.341Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.341Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.345Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.345Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.346Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.346Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.369Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.370Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.370Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.370Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.371Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.371Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.371Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.371Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.383Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.383Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:29.384Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:29.384Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.143Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.143Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.143Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.143Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.144Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.144Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.144Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.144Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.145Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.145Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.146Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.146Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.146Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.146Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.147Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.147Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.181Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.181Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.182Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.182Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.182Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.182Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.183Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.183Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.184Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.184Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.184Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.184Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.185Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.185Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.185Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.185Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.201Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.201Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.201Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.201Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.232Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.232Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:32.233Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:32.233Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.143Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.143Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.144Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.144Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.145Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.145Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.146Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.146Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.155Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.155Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.156Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.156Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.178Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.178Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.178Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.178Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.179Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.179Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.180Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.180Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.188Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.188Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:54:37.188Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:54:37.188Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:37.272Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:37.274Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:37.276Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.276Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.276Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.276Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.279Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.279Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.279Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.279Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.280Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.280Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.280Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.280Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.281Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.281Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.281Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-22T23:55:37.281Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.709Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:37.709Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:37.710Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.710Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.710Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.710Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.711Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.711Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.711Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.711Z] Checked if tokens are valid: true, expires at: 1763859266654
+[debug] [2025-11-22T23:55:37.712Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.712Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.713Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.713Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.714Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-22T23:55:37.714Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.715Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-22T23:55:37.715Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-22T23:55:37.961Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-22T23:55:37.961Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-22T23:55:38.074Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-22T23:55:38.074Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.075Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-22T23:55:38.076Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.077Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-22T23:55:38.077Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.355Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-22T23:55:38.356Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-22T23:55:38.504Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-22T23:55:38.504Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.509Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-22T23:55:38.509Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.514Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-22T23:55:38.514Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-22T23:55:38.549Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:38.549Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:38.550Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:38.550Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:38.575Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:38.575Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-22T23:55:38.576Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-22T23:55:38.576Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:36.825Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:36.827Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:36.829Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.829Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.830Z] > refreshing access token with scopes: []
+[debug] [2025-11-23T00:47:36.830Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-23T00:47:36.830Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:36.831Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.831Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.831Z] > refreshing access token with scopes: []
+[debug] [2025-11-23T00:47:36.832Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-23T00:47:36.832Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:36.835Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.835Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.835Z] > refreshing access token with scopes: []
+[debug] [2025-11-23T00:47:36.835Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-23T00:47:36.835Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:36.835Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.835Z] Checked if tokens are valid: false, expires at: 1763859266654
+[debug] [2025-11-23T00:47:36.835Z] > refreshing access token with scopes: []
+[debug] [2025-11-23T00:47:36.836Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-23T00:47:36.836Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:37.001Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-23T00:47:37.001Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:37.024Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.024Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.026Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-23T00:47:37.026Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:37.040Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-23T00:47:37.040Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.041Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-23T00:47:37.041Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:37.049Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.049Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.051Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-23T00:47:37.051Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-23T00:47:37.059Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.059Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.620Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:37.620Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:37.621Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.621Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.621Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.621Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.622Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.622Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.622Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.622Z] Checked if tokens are valid: true, expires at: 1763862456051
+[debug] [2025-11-23T00:47:37.622Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.622Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.624Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.624Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.624Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-23T00:47:37.624Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.625Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [none]
+[debug] [2025-11-23T00:47:37.625Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com x-goog-quota-user=projects/rccgplaceofvictory
+[debug] [2025-11-23T00:47:37.774Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-23T00:47:37.775Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-23T00:47:37.908Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-23T00:47:37.909Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:37.912Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-23T00:47:37.912Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:37.925Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-23T00:47:37.925Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:38.365Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com 403
+[debug] [2025-11-23T00:47:38.365Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseio.com [omitted]
+[debug] [2025-11-23T00:47:38.719Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-23T00:47:38.719Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:38.721Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-23T00:47:38.721Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:38.727Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com 200
+[debug] [2025-11-23T00:47:38.727Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rccgplaceofvictory/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-11-23T00:47:38.765Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:38.766Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:38.768Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:38.768Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:38.805Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:38.805Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:38.806Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:38.807Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:42.094Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:42.094Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:42.094Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:42.094Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:42.129Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:42.129Z] > authorizing via signed-in user (chamellion555@gmail.com)
+[debug] [2025-11-23T00:47:42.129Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-23T00:47:42.129Z] > authorizing via signed-in user (chamellion555@gmail.com)
