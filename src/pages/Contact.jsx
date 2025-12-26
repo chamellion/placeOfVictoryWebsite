@@ -194,7 +194,7 @@ const Contact = () => {
                   <Phone className="h-6 w-6 text-primary-600 mr-4 mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-lg text-gray-700">+44 7700 900123</p>
+                    <p className="text-lg text-gray-700">{settings?.contactPhone || 'Please check back soon'}</p>
                   </div>
                 </div>
                 
@@ -202,7 +202,7 @@ const Contact = () => {
                   <Mail className="h-6 w-6 text-primary-600 mr-4 mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-lg text-gray-700">info@rccgplaceofvictory.org</p>
+                    <p className="text-lg text-gray-700">admin@placeofvictory.co.uk</p>
                   </div>
                 </div>
                 
@@ -211,9 +211,7 @@ const Contact = () => {
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Office Hours</h3>
                     <p className="text-lg text-gray-700">
-                      Monday - Friday: 9:00 AM - 5:00 PM<br />
-                      Saturday: Closed<br />
-                      Sunday: 8:00 AM - 1:00 PM
+                      Monday - Friday: 10:00 AM - 4:00 PM
                     </p>
                   </div>
                 </div>

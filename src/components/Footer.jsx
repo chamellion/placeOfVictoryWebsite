@@ -177,7 +177,7 @@ const Footer = () => {
               )}
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-primary-400 flex-shrink-0" />
-                <span className="text-lg text-gray-300">info@rccgplaceofvictory.org</span>
+                <span className="text-lg text-gray-300">admin@placeofvictory.co.uk</span>
               </li>
             </ul>
           </div>
