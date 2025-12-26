@@ -32,12 +32,27 @@ import {
   MessageCircle,
   MapPin,
   PhoneCall,
-  Mail
+  Mail,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
+import { fetchCommunityServicesGallery } from '../lib/gallery';
+import { subscribeToSiteSettings } from '../lib/firebaseClient';
 
 const CommunityServices = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeCategory, setActiveCategory] = useState('All');
+  
+  // Gallery state
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [galleryLoading, setGalleryLoading] = useState(true);
+  const [galleryError, setGalleryError] = useState(null);
+  
+  // Site settings state
+  const [settings, setSettings] = useState(null);
+  
+  // Fallback phone number
+  const contactPhone = settings?.contactPhone || 'Contact for details';
 
   // Testimonials data
   const testimonials = [
@@ -153,87 +168,45 @@ const CommunityServices = () => {
     }
   ];
 
-  // Gallery categories
-  const galleryCategories = ['All', 'Food & Clothing', 'Outreach', 'Youth', 'Mental Health', 'Festive Support'];
-  
-  // Gallery images with enhanced categories
-  const galleryImages = [
-    {
-      id: 1,
-      src: '/images/community_work/community_work_one.jpg',
-      alt: 'Community Work - Clothing Distribution',
-      caption: 'Clothing Distribution',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 2,
-      src: '/images/community_work/community_work_two.jpg',
-      alt: 'Community Work - Shoe Drive',
-      caption: 'Shoe Drive',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 3,
-      src: '/images/community_work/community_work_three.jpg',
-      alt: 'Community Work - Clothing Sharing',
-      caption: 'Clothing Sharing',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 4,
-      src: '/images/community_work/community_work_four.jpg',
-      alt: 'Community Work - Community Support',
-      caption: 'Community Support',
-      category: 'Outreach'
-    },
-    {
-      id: 5,
-      src: '/images/community_work/community_work_five.jpg',
-      alt: 'Community Work - Clothing Distribution',
-      caption: 'Clothing Distribution',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 6,
-      src: '/images/community_work/community_work_six.jpg',
-      alt: 'Community Work - Shoe Distribution',
-      caption: 'Shoe Distribution',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 7,
-      src: '/images/community_work/community_work_seven.jpg',
-      alt: 'Community Work - Community Outreach',
-      caption: 'Community Outreach',
-      category: 'Outreach'
-    },
-    {
-      id: 8,
-      src: '/images/community_work/community_work_eight.jpg',
-      alt: 'Community Work - Clothing Drive',
-      caption: 'Clothing Drive',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 9,
-      src: '/images/community_work/community_work_nine.jpg',
-      alt: 'Community Work - Shoe Sharing',
-      caption: 'Shoe Sharing',
-      category: 'Food & Clothing'
-    },
-    {
-      id: 10,
-      src: '/images/community_work/community_work_ten.jpg',
-      alt: 'Community Work - Community Service',
-      caption: 'Community Service',
-      category: 'Outreach'
-    }
+  // Generate gallery categories dynamically from fetched items
+  const galleryCategories = [
+    'All',
+    ...Array.from(new Set(galleryItems.map(item => item.category))).sort()
   ];
 
-  // Filtered gallery images
-  const filteredGalleryImages = activeCategory === 'All' 
-    ? galleryImages 
-    : galleryImages.filter(img => img.category === activeCategory);
+  // Filtered gallery items
+  const filteredGalleryItems = activeCategory === 'All' 
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === activeCategory);
+  
+  // Fetch gallery data on mount
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        setGalleryLoading(true);
+        setGalleryError(null);
+        const items = await fetchCommunityServicesGallery();
+        setGalleryItems(items);
+      } catch (err) {
+        console.error('Failed to load gallery:', err);
+        setGalleryError('Failed to load gallery images. Please try again later.');
+      } finally {
+        setGalleryLoading(false);
+      }
+    }
+    loadGallery();
+  }, []);
+  
+  // Subscribe to site settings for contact phone
+  useEffect(() => {
+    const unsubscribe = subscribeToSiteSettings((result) => {
+      if (result.success && result.settings) {
+        setSettings(result.settings);
+      }
+    });
+    
+    return () => unsubscribe();
+  }, []);
 
   // Auto-rotate testimonials
   useEffect(() => {
@@ -618,42 +591,99 @@ const CommunityServices = () => {
           </div>
           
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {galleryCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  activeCategory === category
-                    ? 'bg-primary-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          {!galleryLoading && !galleryError && galleryItems.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {galleryCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                    activeCategory === category
+                      ? 'bg-primary-600 text-white shadow-lg'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {/* Loading State */}
+          {galleryLoading && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <Loader2 className="h-12 w-12 text-primary-600 animate-spin mb-4" />
+              <p className="text-gray-600 text-lg">Loading gallery images...</p>
+            </div>
+          )}
+          
+          {/* Error State */}
+          {galleryError && !galleryLoading && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md text-center">
+                <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Unable to Load Gallery</h3>
+                <p className="text-gray-600 mb-4">{galleryError}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
+          
+          {/* Empty State */}
+          {!galleryLoading && !galleryError && galleryItems.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 max-w-md text-center">
+                <Gift className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Gallery Images Yet</h3>
+                <p className="text-gray-600">
+                  Check back soon to see photos of our community service activities!
+                </p>
+              </div>
+            </div>
+          )}
           
           {/* Gallery Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {filteredGalleryImages.map((image) => (
-              <div key={image.id} className="group cursor-pointer">
-                <div className="aspect-[3/4] overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-300">
-                  <img 
-                    src={image.src} 
-                    alt={image.alt}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <div className="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-white font-semibold text-sm">{image.caption}</p>
-                      <p className="text-white/80 text-xs">{image.category}</p>
+          {!galleryLoading && !galleryError && filteredGalleryItems.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {filteredGalleryItems.map((item) => (
+                <div key={item.id} className="group cursor-pointer">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-300">
+                    <img 
+                      src={item.url} 
+                      alt={item.title}
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                      <div className="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <p className="text-white font-semibold text-sm">{item.title}</p>
+                        <p className="text-white/80 text-xs">{item.category}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          
+          {/* No items in filtered category */}
+          {!galleryLoading && !galleryError && galleryItems.length > 0 && filteredGalleryItems.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-gray-600 text-lg">
+                No images found in the "{activeCategory}" category.
+              </p>
+              <button
+                onClick={() => setActiveCategory('All')}
+                className="mt-4 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              >
+                View All Images
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -700,11 +730,11 @@ const CommunityServices = () => {
             </div>
             <div className="flex items-center justify-center space-x-3">
               <PhoneCall className="h-6 w-6 text-yellow-300" />
-              <span>Contact for details</span>
+              <span>{contactPhone}</span>
             </div>
             <div className="flex items-center justify-center space-x-3">
               <Mail className="h-6 w-6 text-yellow-300" />
-              <span>info@placeofvictory.co.uk</span>
+              <span>admin@placeofvictory.co.uk</span>
             </div>
           </div>
         </div>
